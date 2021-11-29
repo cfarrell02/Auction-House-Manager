@@ -21,7 +21,7 @@ public class AuctionApplication extends Application {
     //test2
 
 // test
-    //test1
+    
     public static void main(String[] args) {
         launch();
     }
