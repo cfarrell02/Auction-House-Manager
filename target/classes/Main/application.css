@@ -92,4 +92,7 @@
 .date-picker-popup .month-year-pane{
     -fx-background-color: #808080;
 }
+.combo-box{
+    -fx-background-color: #afafaf;
+}
 
