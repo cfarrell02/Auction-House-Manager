@@ -16,7 +16,8 @@ public class AuctionApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
-// test
+//
+    //test2
     public static void main(String[] args) {
         launch();
     }
