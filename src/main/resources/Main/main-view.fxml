@@ -20,7 +20,7 @@
       </MenuBar>
       <VBox alignment="CENTER" maxHeight="-Infinity" prefHeight="630.0" prefWidth="638.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #d4d4d4;" text="Vaccine Management System" textAlignment="CENTER" wrappingWidth="371.3935546875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #d4d4d4;" text="Auction System" textAlignment="CENTER" wrappingWidth="371.3935546875">
                <font>
                   <Font size="27.0" />
                </font>
@@ -33,8 +33,8 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <Label style="-fx-text-fill: #d4d4d4;" text="Search for a vaccination" />
-            <TextField fx:id="searchBar" >
+            <Label prefHeight="17.0" prefWidth="150.0" style="-fx-text-fill: #d4d4d4;" text="Search auction lots/bidders" textAlignment="CENTER" />
+            <TextField fx:id="searchBar">
                <VBox.margin>
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </VBox.margin>
@@ -57,12 +57,12 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="324.0">
                      <children>
-                        <Button mnemonicParsing="false"  prefHeight="40.0" prefWidth="150.0" text="Vaccination Centres" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Auction Lots" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="69.0" prefWidth="320.0" GridPane.columnIndex="1">
                      <children>
-                        <Button mnemonicParsing="false"  prefHeight="40.0" prefWidth="150.0" text="Patients" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Bidders" />
                      </children>
                   </VBox>
                </children>
