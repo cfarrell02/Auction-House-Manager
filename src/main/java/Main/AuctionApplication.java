@@ -22,12 +22,7 @@ public class AuctionApplication extends Application {
         launch();
     }
     
-    //test comment
 
-
-
-
-    //Bruh
 
 
 }
