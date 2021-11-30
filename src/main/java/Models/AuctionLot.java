@@ -9,7 +9,7 @@ public class AuctionLot {
     private String title,description,type,imageURL,timeSold;
     private int year,askingPrice,finalPrice;
     private LocalDate dateSold;
-    private CoolLinkedList bids;
+    private CoolLinkedList<Bid> bids;
 
     public AuctionLot(String title, String description, String type, String imageURL, int year, int askingPrice) {
         this.title = title;
