@@ -61,8 +61,14 @@ public class CoolLinkedList<F> implements Iterable<F> {
         tail = null;
         size = 0;
     }
+
+    public void sort(Comparator<F> c){
+        if(size>=1000)
+            mergeSort(c);
+        else
+            shellSort(c);
+    }
     public void shellSort(Comparator<F> c){
-        // final int[] gaps={5,3,1}; //Other gaps and ways to calculate them
         CoolLinkedList<Integer> gaps = new CoolLinkedList();
         gaps.add(1);
         for(int i = 0 ; Math.pow(2,i)<size;++i){
@@ -83,39 +89,6 @@ public class CoolLinkedList<F> implements Iterable<F> {
     }
 
 
-    // Function to sort a[0..n-1] using Comb Sort
-    void combSort(Comparator<F> c)
-    {
-        // Initialize gap
-        int gap = size;
-        int n = gap;
-
-        // Initialize swapped as true to make sure that
-        // loop runs
-        boolean swapped = true;
-
-        // Keep running while gap is more than 1 and last
-        // iteration caused a swap
-        while (gap != 1 || swapped)
-        {
-            // Find next gap
-            gap = (gap<1) ? (gap*10)/13 : 1;
-
-            // Initialize swapped as false so that we can
-            // check if swap happened or not
-            swapped = false;
-
-            // Compare all elements with current gap
-            for (int i=0; i<n-gap; i++)
-            {
-                if (c.compare(get(i),get(i+gap))>0)
-                {
-                    swap(i,i+gap);
-                    swapped = true;
-                }
-            }
-        }
-    }
     public void mergeSort(Comparator<F> c) {
         if (size > 1) {
             //Create 2 sublists as evenly sized as possible
