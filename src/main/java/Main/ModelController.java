@@ -15,6 +15,20 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class ModelController {
-
+    @FXML
+    private Text modelTitle;
+    @FXML
+    private ListView<String> mainList;
+    @FXML
+    private TextField biddName,biddTelephone,biddEmail,aucTitle,aucYear,
+            aucAskingPrice,aucURL,bidAmount,bidTime;
+    @FXML
+    private DatePicker bidDate;
+    @FXML
+    private ChoiceBox<String> aucType;
+    @FXML
+    private TextArea biddAddress,aucDesc;
+    @FXML
+    private AnchorPane aucAdd,bidAdd,biddAdd;
 
 }

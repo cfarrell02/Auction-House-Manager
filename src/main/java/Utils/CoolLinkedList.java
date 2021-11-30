@@ -61,10 +61,20 @@ public class CoolLinkedList<F> implements Iterable<F> {
         tail = null;
         size = 0;
     }
-    public void shellSort(Comparator<F> c){
-        final int[] gaps={5,3,1}; //Other gaps and ways to calculate them
 
-        for(int g : gaps) {
+    public void sort(Comparator<F> c){
+        if(size>=1000)
+            mergeSort(c);
+        else
+            shellSort(c);
+    }
+    public void shellSort(Comparator<F> c){
+        CoolLinkedList<Integer> gaps = new CoolLinkedList();
+        gaps.add(1);
+        for(int i = 0 ; Math.pow(2,i)<size;++i){
+            gaps.add(0,(int) Math.pow(2,i) + 1);
+        }
+        for(Integer g : gaps) {
 
             for(int e=g;e<size;e++){
                 F elem=get(e);
@@ -77,6 +87,31 @@ public class CoolLinkedList<F> implements Iterable<F> {
             }
         }
     }
+
+
+    public void mergeSort(Comparator<F> c) {
+        if (size > 1) {
+            //Create 2 sublists as evenly sized as possible
+            int x = size / 2, y = size - x;
+            CoolLinkedList<F> xa = new CoolLinkedList<>();
+            CoolLinkedList<F> ya = new CoolLinkedList<>();
+            //Copy elements into sub lists
+            int i;
+            for (i = 0; i < x; i++) xa.add(get(i));
+            for (int i2 = 0; i2 < y; i2++, i++) ya.add(get(i));
+            //Recursively merge sort the sub lists independently
+            xa.mergeSort(c);
+            ya.mergeSort(c);
+            //Merge the 2 sorted sub lists
+            i = 0;
+            int xai = 0, yai = 0;
+            while (xai < xa.size() && yai < ya.size())
+                set(i++,(c.compare(xa.get(xai),ya.get(yai)))<0 ? xa.get(xai++) : ya.get(yai++));
+            while (xai < xa.size()) set(i++,xa.get(xai++));
+            while (yai < ya.size()) set(i++,ya.get(yai++));
+        }
+    }
+
 
     public boolean isEmpty(){
         return size == 0;

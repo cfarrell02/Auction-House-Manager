@@ -32,8 +32,8 @@
             </AnchorPane>
             <AnchorPane fx:id="aucAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <TextField fx:id="aucTitle1" layoutX="58.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Title" />
-                  <TextArea fx:id="aucDesc1" layoutX="58.0" layoutY="48.0" prefHeight="57.0" prefWidth="200.0" promptText="Description" />
+                  <TextField fx:id="aucTitle" layoutX="58.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Title" />
+                  <TextArea fx:id="aucDesc" layoutX="58.0" layoutY="48.0" prefHeight="57.0" prefWidth="200.0" promptText="Description" />
                   <ChoiceBox fx:id="aucType" layoutX="319.0" layoutY="16.0" prefWidth="200.0" />
                   <TextField fx:id="aucYear" layoutX="319.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="Year of origin" />
                   <TextField fx:id="aucAskingPrice" layoutX="319.0" layoutY="79.0" prefHeight="25.0" prefWidth="200.0" promptText="Asking Price" />
@@ -49,7 +49,7 @@
                   <TextField fx:id="bidTime" layoutX="576.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Time" />
                   <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" text="Edit Selected" />
                   <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" text="Add New" />
-                  <DatePicker layoutX="319.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Date" />
+                  <DatePicker fx:id="bidDate" layoutX="319.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Date" />
                </children>
             </AnchorPane>
          </children>
