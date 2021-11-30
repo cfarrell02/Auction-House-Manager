@@ -62,9 +62,13 @@ public class CoolLinkedList<F> implements Iterable<F> {
         size = 0;
     }
     public void shellSort(Comparator<F> c){
-        final int[] gaps={5,3,1}; //Other gaps and ways to calculate them
-
-        for(int g : gaps) {
+        // final int[] gaps={5,3,1}; //Other gaps and ways to calculate them
+        CoolLinkedList<Integer> gaps = new CoolLinkedList();
+        gaps.add(1);
+        for(int i = 0 ; Math.pow(2,i)<size;++i){
+            gaps.add(0,(int) Math.pow(2,i) + 1);
+        }
+        for(Integer g : gaps) {
 
             for(int e=g;e<size;e++){
                 F elem=get(e);
@@ -78,6 +82,90 @@ public class CoolLinkedList<F> implements Iterable<F> {
         }
     }
 
+
+    // Function to sort a[0..n-1] using Comb Sort
+    void combSort(Comparator<F> c)
+    {
+        // Initialize gap
+        int gap = size;
+        int n = gap;
+
+        // Initialize swapped as true to make sure that
+        // loop runs
+        boolean swapped = true;
+
+        // Keep running while gap is more than 1 and last
+        // iteration caused a swap
+        while (gap != 1 || swapped)
+        {
+            // Find next gap
+            gap = (gap<1) ? (gap*10)/13 : 1;
+
+            // Initialize swapped as false so that we can
+            // check if swap happened or not
+            swapped = false;
+
+            // Compare all elements with current gap
+            for (int i=0; i<n-gap; i++)
+            {
+                if (c.compare(get(i),get(i+gap))>0)
+                {
+                    swap(i,i+gap);
+                    swapped = true;
+                }
+            }
+        }
+    }
+    public void mergeSort(Comparator<F> c) {
+        if (size > 1) {
+            //Create 2 sublists as evenly sized as possible
+            int x = size / 2, y = size - x;
+            CoolLinkedList<F> xa = new CoolLinkedList<>();
+            CoolLinkedList<F> ya = new CoolLinkedList<>();
+            //Copy elements into sub lists
+            int i;
+            for (i = 0; i < x; i++) xa.add(get(i));
+            for (int i2 = 0; i2 < y; i2++, i++) ya.add(get(i));
+            //Recursively merge sort the sub lists independently
+            xa.mergeSort(c);
+            ya.mergeSort(c);
+            //Merge the 2 sorted sub lists
+            i = 0;
+            int xai = 0, yai = 0;
+            while (xai < xa.size() && yai < ya.size())
+                set(i++,(c.compare(xa.get(xai),ya.get(yai)))<0 ? xa.get(xai++) : ya.get(yai++));
+            while (xai < xa.size()) set(i++,xa.get(xai++));
+            while (yai < ya.size()) set(i++,ya.get(yai++));
+        }
+    }
+
+
+    public void quickSort(Comparator<F> c, int lowerIndex, int higherIndex) {
+
+        int leftIndex = lowerIndex;
+        int rightIndex = higherIndex;
+
+        int pivot = a[lowerIndex+(higherIndex-lowerIndex)/2]; //Use middle as pivot (could use others)
+
+        while(leftIndex<=rightIndex) { //Until left and right indices "cross over"
+
+            while(a[leftIndex]<pivot) leftIndex++; //Move until left index elem not < pivot
+            while(a[rightIndex]>pivot) rightIndex--; //Move until right index elem not > pivot
+
+            if(leftIndex<=rightIndex) { //If indices haven't crossed over, swap the elements
+                int swap=a[leftIndex];
+                a[leftIndex]=a[rightIndex];
+                a[rightIndex]=swap;
+
+                //Move indices to next positions on both sides before continuing
+                leftIndex++;
+                rightIndex--;
+            }
+        }
+
+        if(lowerIndex<rightIndex) quickSort(a,lowerIndex,rightIndex);
+        if(leftIndex<higherIndex) quickSort(a,leftIndex,higherIndex);
+    }
     public boolean isEmpty(){
         return size == 0;
     }
