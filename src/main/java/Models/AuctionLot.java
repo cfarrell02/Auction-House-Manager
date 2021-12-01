@@ -106,4 +106,20 @@ public class AuctionLot {
     public void setDateSold(LocalDate dateSold) {
         this.dateSold = dateSold;
     }
+
+    @Override
+    public String toString() {
+        return "AuctionLot{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", timeSold='" + timeSold + '\'' +
+                ", year=" + year +
+                ", askingPrice=" + askingPrice +
+                ", finalPrice=" + finalPrice +
+                ", dateSold=" + dateSold +
+                ", bids=" + bids +
+                '}';
+    }
 }

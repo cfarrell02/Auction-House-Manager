@@ -8,11 +8,11 @@
    <children>
       <ToolBar prefHeight="39.0" prefWidth="838.0">
         <items>
-            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="43.0" text="Back" />
+            <Button mnemonicParsing="false" onAction="#back" prefHeight="0.0" prefWidth="43.0" text="Back" />
             <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="64.0" text="Home" />
         </items>
       </ToolBar>
-      <ListView fx:id="mainList" prefHeight="381.0" prefWidth="838.0" />
+      <ListView fx:id="mainList" onKeyPressed="#delete" onMousePressed="#viewAttributes" prefHeight="381.0" prefWidth="838.0" />
       <Text fx:id="modelTitle" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #d4d4d4;" text="Auction Lot" textAlignment="CENTER" wrappingWidth="401.5">
          <font>
             <Font size="24.0" />
@@ -26,8 +26,8 @@
                   <TextArea fx:id="biddAddress" layoutX="319.0" layoutY="46.0" prefHeight="57.0" prefWidth="200.0" promptText="Address" />
                   <TextField fx:id="biddTelephone" layoutX="319.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Phone Number" />
                   <TextField fx:id="biddEmail" layoutX="584.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Email" />
-                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" text="Edit Selected" />
-                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" text="Add New" />
+                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" onAction="#editBidder" text="Edit Selected" />
+                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" onAction="#addBidder" text="Add New" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="aucAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
@@ -38,8 +38,8 @@
                   <TextField fx:id="aucYear" layoutX="319.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="Year of origin" />
                   <TextField fx:id="aucAskingPrice" layoutX="319.0" layoutY="79.0" prefHeight="25.0" prefWidth="200.0" promptText="Asking Price" />
                   <TextField fx:id="aucURL" layoutX="570.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="Image URL" />
-                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" text="Edit Selected" />
-                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" text="Add New" />
+                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" onAction="#editAuctionLot" text="Edit Selected" />
+                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" onAction="#addAuctionLot" text="Add New" />
                   <Label layoutX="405.0" text="Type" />
                </children>
             </AnchorPane>
@@ -54,16 +54,5 @@
             </AnchorPane>
          </children>
       </StackPane>
-      <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0">
-          <header>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-          </header>
-          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-          </content>
-          <expandableContent>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
-          </expandableContent>
-      </DialogPane>
    </children>
 </VBox>
