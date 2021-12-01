@@ -8,14 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CoolLinkedListTest {
     public CoolLinkedList<String> list = new CoolLinkedList<>();
+
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
 
-        for(int i = 0;i<10;++i){
-            String add = "Hello"+i;
+        for (int i = 0; i < 10000; ++i) {
+            //String add = "Hello" + i;
+            String add = Utilities.getAlphaNumericString(6);
             list.add(add);
         }
-        System.out.println("Done Setup");
     }
 
     @org.junit.jupiter.api.Test
@@ -28,32 +29,35 @@ class CoolLinkedListTest {
 
     @org.junit.jupiter.api.Test
     void get() {
-        assertEquals("Hello0",list.get(0));
-        assertEquals("Hello3",list.get(3));
-        assertEquals("Hello4",list.get(4));
-        assertEquals("Hello5",list.get(5));
-        assertEquals("Hello6",list.get(6));
-        assertEquals("Hello8",list.get(8));
-        assertEquals("Hello9",list.get(9));
+        assertEquals("Hello0", list.get(0));
+        assertEquals("Hello3", list.get(3));
+        assertEquals("Hello4", list.get(4));
+        assertEquals("Hello5", list.get(5));
+        assertEquals("Hello6", list.get(6));
+        assertEquals("Hello8", list.get(8));
+        assertEquals("Hello9", list.get(9));
 
     }
+
     @Test
     void delete() {
-        assertEquals("Hello0",list.get(0));
+        assertEquals("Hello0", list.get(0));
         list.remove(0);
-        assertNotEquals("Hello0",list.get(0));
-        assertEquals("Hello5",list.get(4));
+        assertNotEquals("Hello0", list.get(0));
+        assertEquals("Hello5", list.get(4));
         list.remove(4);
-        assertNotEquals("Hello5",list.get(4));
-        assertEquals("Hello9",list.get(7));
+        assertNotEquals("Hello5", list.get(4));
+        assertEquals("Hello9", list.get(7));
         list.remove(7);
-        assertNotEquals("Hello9",list.get(7));
+        assertNotEquals("Hello9", list.get(7));
 
     }
+
     @org.junit.jupiter.api.Test
     void contains() {
 
-        assertTrue(list.contains("Hello5"));}
+        assertTrue(list.contains("Hello5"));
+    }
 
     @org.junit.jupiter.api.Test
     void isEmpty() {
@@ -61,6 +65,7 @@ class CoolLinkedListTest {
         list.clear();
         assertTrue(list.isEmpty());
     }
+
     @Test
     void replace() {
         assertEquals("Hello3", list.get(3));
@@ -77,52 +82,11 @@ class CoolLinkedListTest {
     }
 
     @Test
-    void sort(){
+    void sort() {
         list.mergeSort(Comparator.comparing(String::toString));
         System.out.println("--Sorted--");
-        for(String word:list)
+        for (String word : list)
             System.out.println(word);
     }
 
-    public class RandomString {
-
-        // function to generate a random string of length n
-        static String getAlphaNumericString(int n)
-        {
-
-            // chose a Character random from this String
-            String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    + "0123456789"
-                    + "abcdefghijklmnopqrstuvxyz";
-
-            // create StringBuffer size of AlphaNumericString
-            StringBuilder sb = new StringBuilder(n);
-
-            for (int i = 0; i < n; i++) {
-
-                // generate a random number between
-                // 0 to AlphaNumericString variable length
-                int index
-                        = (int)(AlphaNumericString.length()
-                        * Math.random());
-
-                // add Character one by one in end of sb
-                sb.append(AlphaNumericString
-                        .charAt(index));
-            }
-
-            return sb.toString();
-        }
-
-        public static void main(String[] args)
-        {
-
-            // Get the size n
-            int n = 20;
-
-            // Get and display the alphanumeric string
-            System.out.println(RandomString
-                    .getAlphaNumericString(n));
-        }
-    }
 }
