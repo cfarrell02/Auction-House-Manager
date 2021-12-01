@@ -14,6 +14,14 @@ public class Bidder {
         this.bids = new CoolLinkedList<>();
     }
 
+    public CoolLinkedList<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(CoolLinkedList<Bid> bids) {
+        this.bids = bids;
+    }
+
     public String getName() {
         return name;
     }
