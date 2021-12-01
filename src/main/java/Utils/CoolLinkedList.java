@@ -21,32 +21,9 @@ public class CoolLinkedList<F> implements Iterable<F> {
         return true;
     }
     public F set(int oldIndex, F newObject){
-        if(oldIndex>=0&&oldIndex<size){
-            node<F> oldNode = getNode(oldIndex);
-            node<F> newNode = new node<>();
-            newNode.setContents(newObject);
-            if(size==1){
-                head = newNode;
-                tail = newNode;
-            }else {
-                if (oldIndex == 0) {
-                    newNode.next = head.next;
-                    head.next.previous = newNode;
-                    head = newNode;
-                } else if (oldIndex == (size - 1)) {
-                    newNode.previous = newNode;
-                    tail.previous.next = newNode;
-                    tail = newNode;
-                } else {
-                    newNode.previous = oldNode.previous;
-                    oldNode.previous.next = newNode;
-                    newNode.next = oldNode.next;
-                    oldNode.next.previous = newNode;
-                }
-            }
-            return oldNode.getContents();
-        }
-        return null;
+        F oldObject = get(oldIndex);
+        getNode(oldIndex).setContents(newObject);
+            return oldObject;
     }
 
     public void swap(int i,int j){
