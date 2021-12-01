@@ -54,6 +54,14 @@ public class Bidder {
         this.email = email;
     }
 
+
+    public void editBid(int oldIndex,Bid bid){
+        bids.set(oldIndex,bid);
+    }
+
+    public void removeBid(int index){
+        bids.remove(index);
+    }
     @Override
     public String toString() {
         return "Bidder: " + name + " Address: "+ address + " Phone: " + telephone + " Email: " + email;
