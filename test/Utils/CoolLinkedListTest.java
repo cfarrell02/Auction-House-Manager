@@ -11,8 +11,8 @@ class CoolLinkedListTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
 
-        for(int i = 0;i<10000;++i){
-            String add = RandomString.getAlphaNumericString(10);
+        for(int i = 0;i<10;++i){
+            String add = "Hello"+i;
             list.add(add);
         }
         System.out.println("Done Setup");
