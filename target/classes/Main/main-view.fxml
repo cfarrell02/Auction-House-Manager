@@ -57,12 +57,12 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="324.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Auction Lots" />
+                        <Button mnemonicParsing="false" onAction="#showAuctionLot" prefHeight="40.0" prefWidth="150.0" text="Auction Lots" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="69.0" prefWidth="320.0" GridPane.columnIndex="1">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Bidders" />
+                        <Button mnemonicParsing="false" onAction="#showBidder" prefHeight="40.0" prefWidth="150.0" text="Bidders" />
                      </children>
                   </VBox>
                </children>

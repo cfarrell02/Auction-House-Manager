@@ -53,4 +53,9 @@ public class Bidder {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Bidder: " + name + " Address: "+ address + " Phone: " + telephone + " Email: " + email;
+    }
 }
