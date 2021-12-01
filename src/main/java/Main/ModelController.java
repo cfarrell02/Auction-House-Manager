@@ -2,6 +2,7 @@ package Main;
 
 
 import Models.AuctionLot;
+import Models.Bid;
 import Models.Bidder;
 import Utils.CoolLinkedList;
 import javafx.beans.value.ObservableValue;
@@ -53,6 +54,10 @@ public class ModelController {
                 mainList.getItems().add(auctionLot.toString());
         }
 
+
+
+
+
     }
 
     public void back() {
@@ -95,7 +100,11 @@ public class ModelController {
                 AuctionApplication.getAuctionAPI().removeBidder(index);
             else if (aucAdd.isVisible())
                 AuctionApplication.getAuctionAPI().removeAuctionLot(index);
+            else if (bidAdd.isVisible())
+                currentBidder.removeBid(index);
             mainList.getItems().remove(index);
+
+
         }
     }
 
@@ -142,6 +151,25 @@ public class ModelController {
         AuctionApplication.getAuctionAPI().editAuctionLot(index, newAuctionLot);
 
         mainList.getItems().set(index, newAuctionLot.toString());
+    }
+
+    /**bid methods**/
+    public void addBid(){
+        Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()));
+        mainList.getItems().add(newBid.toString());
+        currentBidder.getBids().add(newBid);
+
+        bidTime.clear();
+        bidAmount.clear();
+    }
+
+    public void editBid(){
+        int index = mainList.getSelectionModel().getSelectedIndex();
+        Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()));
+        currentBidder.editBid(index, newBid);
+
+        mainList.getItems().set(index, newBid.toString());
+
     }
 
 

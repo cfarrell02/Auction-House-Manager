@@ -36,4 +36,6 @@ public class Bid {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+
 }
