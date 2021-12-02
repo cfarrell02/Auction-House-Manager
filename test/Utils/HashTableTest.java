@@ -7,14 +7,16 @@ import java.util.Comparator;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HashTableTest {
-    public HashTable<Integer,String> hashTable;
+    public HashTable<String,String> hashTable;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
     hashTable = new HashTable<>(100);
         for (int i = 0; i < 10000; ++i) {
-            int key =  i;
+            String key = "Key "+i;
+  //          System.out.println(key);
             String add = Utilities.getAlphaNumericString(6);
+  //          System.out.println(add);
             hashTable.add(key,add);
         }
     }
@@ -26,7 +28,7 @@ class HashTableTest {
 
     @Test
     void get() {
-//        System.out.println(hashTable.get(6324));
+        System.out.println(hashTable.get("Key 6324"));
     }
 
     @Test

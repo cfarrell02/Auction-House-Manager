@@ -1,13 +1,14 @@
 package Utils;
 
+import Main.MainController;
 import javafx.scene.control.ListView;
 
 import java.util.Iterator;
 
 public class HashTable<K,D> {
     public int size, tableLength;
-    CoolLinkedList<D>[] table;
-    CoolLinkedList<K>[] keys;
+    private CoolLinkedList[] table;
+    private CoolLinkedList[] keys;
 
 
     public HashTable(int tableLength) {
@@ -15,23 +16,25 @@ public class HashTable<K,D> {
         this.tableLength = tableLength;
         this.table = new CoolLinkedList[tableLength];
         this.keys = new CoolLinkedList[tableLength];
+        System.out.println(tableLength);
     }
     private int hashFunction(K key) {
-        System.out.println(key.hashCode() % tableLength);
-        return key.hashCode() % tableLength;
+        return Math.abs(key.hashCode() % tableLength);
     }
     public boolean add(K key,D item){
-        if(uniqueKey(key)){
+  //     if(uniqueKey(key)){
             int index = hashFunction(key);
+            if(table[index]!=null)
             table[index].add(0,item);
+            if(keys[index]!=null)
             keys[index].add(0,key);
             ++size;
             return true;
-        }
-            return false;
+   //     }
+   //         return false;
     }
     private boolean uniqueKey(K key){
-        for(K currentKey:keys[hashFunction(key)]){
+        for(Object currentKey:keys[hashFunction(key)]){
             if(currentKey.equals(key)) return false;
         }
         return true;
@@ -39,38 +42,38 @@ public class HashTable<K,D> {
     public D get(K key) {
         int index1 = hashFunction(key);
         int index2 = 0;
-        for (K currentKey : keys[index1]) {
+        for (Object currentKey : keys[index1]) {
             if (currentKey.equals(key)) break;
             ++index2;
         }
-        return table[index1].get(index2);
+        return (D) table[index1].get(index2);
     }
-    public CoolLinkedList<D> toCoolLinkedList(){
-        CoolLinkedList<D> newList = new CoolLinkedList<>();
-        for(CoolLinkedList<D> list: table){
-            for(D item:list) newList.add(item);
-        }
-        return newList;
-    }
-    public void addToListView(ListView<String> newList){
-        for(CoolLinkedList<D> list: table){
-            for(D item:list) newList.getItems().add(item.toString());
-        }
-    }
-    public boolean remove(K key){
-        int index1 = hashFunction(key);
-        int index2 = 0;
-        boolean found= false;
-        for(K currentKey:keys[index1]){
-            if(currentKey.equals(key)){
-                found=true;
-                break;}
-            ++index2;
-        }
-        if(found)
-        table[index1].remove(index2);
-        return found;
-    }
+//    public CoolLinkedList<D> toCoolLinkedList(){
+//        CoolLinkedList<D> newList = new CoolLinkedList<>();
+//        for(CoolLinkedList<D> list: table){
+//            for(D item:list) newList.add(item);
+//        }
+//        return newList;
+//    }
+//    public void addToListView(ListView<String> newList){
+//        for(CoolLinkedList<D> list: table){
+//            for(D item:list) newList.getItems().add(item.toString());
+//        }
+//    }
+//    public boolean remove(K key){
+//        int index1 = hashFunction(key);
+//        int index2 = 0;
+//        boolean found= false;
+//        for(K currentKey:keys[index1]){
+//            if(currentKey.equals(key)){
+//                found=true;
+//                break;}
+//            ++index2;
+//        }
+//        if(found)
+//        table[index1].remove(index2);
+//        return found;
+//    }
 
 
 //    public class HashIterator<G> implements Iterator<G> {
