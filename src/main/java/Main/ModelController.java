@@ -100,8 +100,11 @@ public class ModelController {
                 AuctionApplication.getAuctionAPI().removeBidder(index);
             else if (aucAdd.isVisible())
                 AuctionApplication.getAuctionAPI().removeAuctionLot(index);
-            else if (bidAdd.isVisible())
+            else if (bidAdd.isVisible()) {
                 currentBidder.removeBid(index);
+                currentLot.removeBid(index);
+            }
+
             mainList.getItems().remove(index);
 
 
@@ -158,6 +161,7 @@ public class ModelController {
         Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()));
         mainList.getItems().add(newBid.toString());
         currentBidder.getBids().add(newBid);
+        currentLot.getBids().add(newBid);
 
         bidTime.clear();
         bidAmount.clear();
@@ -167,6 +171,7 @@ public class ModelController {
         int index = mainList.getSelectionModel().getSelectedIndex();
         Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()));
         currentBidder.editBid(index, newBid);
+        currentLot.getBids().add(newBid);
 
         mainList.getItems().set(index, newBid.toString());
 
