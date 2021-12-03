@@ -1,5 +1,13 @@
 package Main;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import Models.AuctionLot;
 import Models.Bidder;
 import Utils.CoolLinkedList;
@@ -8,7 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 
 public class AuctionApplication extends Application {
     private static AuctionAPI auctionAPI;
@@ -32,6 +40,20 @@ public class AuctionApplication extends Application {
         launch();
     }
 
+    public static void save() throws IOException {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("AuctionSystem.xml"));
+        out.writeObject(auctionAPI);
+        out.close();
+    }
+
+    public static void load() throws IOException, ClassNotFoundException {
+        XStream xstream = new XStream(new DomDriver());
+        xstream.addPermission(AnyTypePermission.ANY);
+        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("AuctionSystem.xml"));
+        auctionAPI = (AuctionAPI) is.readObject();
+        is.close();
+    }
 
 
 
