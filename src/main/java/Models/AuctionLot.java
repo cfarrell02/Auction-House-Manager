@@ -9,7 +9,7 @@ public class AuctionLot {
     private String title,description,type,imageURL,timeSold;
     private int year,askingPrice,finalPrice;
     private LocalDate dateSold;
-    private CoolLinkedList<Bid> bids;
+
 
     public AuctionLot(String title, String description, String type, String imageURL, int year, int askingPrice) {
         this.title = title;
@@ -18,21 +18,13 @@ public class AuctionLot {
         this.imageURL = imageURL;
         this.year = year;
         this.askingPrice = askingPrice;
-        this.bids = new CoolLinkedList();
+
     }
 
     public void sell(int finalPrice,LocalDate dateSold,String timeSold){
         this.finalPrice = finalPrice;
         this.dateSold = dateSold;
         this.timeSold = timeSold;
-    }
-
-    public CoolLinkedList getBids() {
-        return bids;
-    }
-
-    public void setBids(CoolLinkedList bids) {
-        this.bids = bids;
     }
 
     public String getTitle() {
@@ -107,13 +99,7 @@ public class AuctionLot {
         this.dateSold = dateSold;
     }
 
-    public void editBid(int oldIndex,Bid bid){
-        bids.set(oldIndex,bid);
-    }
 
-    public void removeBid(int index){
-        bids.remove(index);
-    }
 
     @Override
     public String toString() {
@@ -127,7 +113,6 @@ public class AuctionLot {
                 ", askingPrice=" + askingPrice +
                 ", finalPrice=" + finalPrice +
                 ", dateSold=" + dateSold +
-                ", bids=" + bids +
                 '}';
     }
 }

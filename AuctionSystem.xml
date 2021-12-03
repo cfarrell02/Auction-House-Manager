@@ -1,0 +1,10 @@
+<object-stream>
+  <Main.AuctionAPI>
+    <auctionLots>
+      <size>0</size>
+    </auctionLots>
+    <bidders>
+      <size>0</size>
+    </bidders>
+  </Main.AuctionAPI>
+</object-stream>

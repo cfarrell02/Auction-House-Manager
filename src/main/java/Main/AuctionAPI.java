@@ -35,6 +35,14 @@ public class AuctionAPI {
         auctionLots.set(oldIndex,auctionLot);
     }
 
+
+    public AuctionLot findLotByName(String auctionTitle){
+        for (AuctionLot auctionLot : auctionLots){
+            if(auctionLot.getTitle().equals(auctionTitle))
+                return auctionLot;
+        }return null;
+    }
+
     //Bidder Methods
     public CoolLinkedList<Bidder> getBidders() {
         return bidders;
