@@ -1,10 +1,6 @@
 package Main;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,4 +30,14 @@ public class MainController {
     public static String getCurrentTitle() {
         return currentTitle;
     }
+
+    public void save() throws IOException {
+        AuctionApplication.save();
+    }
+
+    public void load() throws IOException, ClassNotFoundException {
+        AuctionApplication.load();
+    }
+
+
 }

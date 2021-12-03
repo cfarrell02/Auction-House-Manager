@@ -107,6 +107,14 @@ public class AuctionLot {
         this.dateSold = dateSold;
     }
 
+    public void editBid(int oldIndex,Bid bid){
+        bids.set(oldIndex,bid);
+    }
+
+    public void removeBid(int index){
+        bids.remove(index);
+    }
+
     @Override
     public String toString() {
         return "AuctionLot{" +
