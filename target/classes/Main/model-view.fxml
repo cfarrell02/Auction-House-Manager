@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="840.0" scaleShape="false" styleClass="dark" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.ModelController">
+   <children>
+      <ToolBar prefHeight="39.0" prefWidth="838.0">
+        <items>
+            <Button mnemonicParsing="false" onAction="#back" prefHeight="0.0" prefWidth="43.0" text="Back" />
+            <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="64.0" text="Home" />
+        </items>
+      </ToolBar>
+      <ListView fx:id="mainList" onKeyPressed="#delete" onMousePressed="#viewAttributes" prefHeight="381.0" prefWidth="838.0" />
+      <Text fx:id="modelTitle" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #d4d4d4;" text="Auction Lot" textAlignment="CENTER" wrappingWidth="401.5">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <AnchorPane fx:id="biddAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="biddName" layoutX="58.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Name" />
+                  <TextArea fx:id="biddAddress" layoutX="319.0" layoutY="46.0" prefHeight="57.0" prefWidth="200.0" promptText="Address" />
+                  <TextField fx:id="biddTelephone" layoutX="319.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Phone Number" />
+                  <TextField fx:id="biddEmail" layoutX="584.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Email" />
+                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" onAction="#editBidder" text="Edit Selected" />
+                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" onAction="#addBidder" text="Add New" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="aucAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <TextField fx:id="aucTitle" layoutX="58.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Title" />
+                  <TextArea fx:id="aucDesc" layoutX="58.0" layoutY="48.0" prefHeight="57.0" prefWidth="200.0" promptText="Description" />
+                  <ChoiceBox fx:id="aucType" layoutX="319.0" layoutY="16.0" prefWidth="200.0" />
+                  <TextField fx:id="aucYear" layoutX="319.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="Year of origin" />
+                  <TextField fx:id="aucAskingPrice" layoutX="319.0" layoutY="79.0" prefHeight="25.0" prefWidth="200.0" promptText="Asking Price" />
+                  <TextField fx:id="aucURL" layoutX="570.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="Image URL" />
+                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" onAction="#editAuctionLot" text="Edit Selected" />
+                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" onAction="#addAuctionLot" text="Add New" />
+                  <Label layoutX="405.0" text="Type" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="bidAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <TextField fx:id="bidAmount" layoutX="59.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Amount" />
+                  <TextField fx:id="bidTime" layoutX="576.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Time" />
+                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" text="Edit Selected" />
+                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" text="Add New" />
+                  <DatePicker fx:id="bidDate" layoutX="319.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Date" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</VBox>
