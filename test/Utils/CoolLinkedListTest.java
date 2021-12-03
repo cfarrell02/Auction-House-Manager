@@ -3,34 +3,35 @@ package Utils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
+import java.util.Hashtable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CoolLinkedListTest {
     public CoolLinkedList<String> list = new CoolLinkedList<>();
+    public CoolHashTable<String, String> hashTable;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
 
-        for (int i = 0; i < 10000; ++i) {
-            //String add = "Hello" + i;
-            String add = Utilities.getAlphaNumericString(6);
-            list.add(add);
-        }
-        list.add("Testing123");
-    }
-    @Test
-    void search(){
-        for(String name: list){
-            System.out.println(name);
-            if(name.equals("Testing123")){
-                break;
-            }
+        for (int i = 0; i < 10; ++i) {
+            list.add("Hello" + i);
         }
     }
+
+//    }
+//    @Test
+//    void search(){
+//        for(String name: list){
+//            System.out.println(name);
+//            if(name.equals("Testing123")){
+//                break;
+//            }
+//        }
+//    }
+
     @org.junit.jupiter.api.Test
     void add() {
-
         assertTrue(list.contains("Hello0"));
         assertTrue(list.contains("Hello9"));
         assertFalse(list.contains("Hello11"));

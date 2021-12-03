@@ -8,18 +8,17 @@ public class CoolHashTable<K,F> {
     private int size,length;
 
     public CoolHashTable(int length) {
-        this.size = size;
+        this.size = 0;
         this.length = length;
         table = new Entry[length];
-        for(int i = 0;i<length;++i) table[i]=new Entry(null,null);
+        for(int i = 0;i<length;++i) table[i]=new Entry("null","null");
     }
 
     public int hashFunction(K key){
-        return Math.abs(key.hashCode()*key.hashCode() % length);
+        return Math.abs(key.hashCode() % length);
     }
 
     public void add(K key,F object) {
-        if(get(key)==null) {
             int index = hashFunction(key);
             Entry<K, F> item = new Entry<>(key, object);
             Entry<K, F> head = table[index];
@@ -27,46 +26,45 @@ public class CoolHashTable<K,F> {
                 head.previous = item;
                 item.next = head;}
                 table[index] = item;
-            }
-
             ++size;
         }
 
 
-    public F get(K key){
-        Entry<K,F> item = getEntry(key);
-        return item==null ? null: Objects.requireNonNull(item).value;
-    }
+//    public F get(K key){
+//        Entry<K,F> item = getEntry(key);
+//        return item==null ? null: item.value;
+//    }
 
-    private Entry<K,F> getEntry(K key){
-        //Entry<K,F> temp = table[hashFunction(key)];
-        for(Entry<K,F> temp = table[hashFunction(key)];temp!=null&&temp.key!=null;temp=temp.next){
-            if(temp.key.equals(key)) return temp;
+    public F get(K key){
+        Entry<K,F> temp = table[hashFunction(key)];
+        while(temp!=null){
+            if(temp.key.equals(key)) return temp.value;
+            temp=temp.next;
         }
         return null;
     }
 
-public F remove(K key){
-        Entry<K,F> item = getEntry(key);
-        if(table[hashFunction(key)].equals(item)){
-            table[hashFunction(key)] = item.next;
-        }else{
-            if(item.next!=null)
-            item.previous.next=item.next;
-            else item.previous.next=null;
-        }
-        return item.value;
-}
+//public F remove(K key){
+//        Entry<K,F> item = getEntry(key);
+//        if(table[hashFunction(key)].equals(item)){
+//            table[hashFunction(key)] = item.next;
+//        }else{
+//            if(item.next!=null)
+//            item.previous.next=item.next;
+//            else item.previous.next=null;
+//        }
+//        return item.value;
+//}
 
 
     public int size(){
         return size;}
     public int size(int key){
         Entry<K,F> temp = table[key];
-        for(int i=1;temp!=null;++i,temp=temp.next){
+        for(int i=0;temp!=null;++i,temp=temp.next){
         if(temp.next == null) return i;
         }
-        return 0;
+        return -1;
     }
 
 
@@ -88,27 +86,7 @@ public F remove(K key){
     return list.toString();
     }
 }
-//    public F remove(int index){
-//        node<F> deletedNode = getNode(index);
-//
-//        if(size ==1)
-//            clear();
-//        else {
-//            if (index == 0) {
-//                head = head.next;
-//                head.previous = null;
-//            } else if (index == size - 1) {
-//                tail = tail.previous;
-//                tail.next = null;
-//            } else {
-//                deletedNode.next.previous = deletedNode.previous;
-//                deletedNode.previous.next = deletedNode.next;
-//            }
-//        }
-//        size--;
-//        return deletedNode.getContents();
-//
-//    }
+
 
 
 class Entry<K,F> {

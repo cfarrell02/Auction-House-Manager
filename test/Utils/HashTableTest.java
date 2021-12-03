@@ -11,28 +11,22 @@ class HashTableTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-    hashTable = new CoolHashTable<>(100000);
-        for (int i = 0; i < 10000; ++i) {
+    hashTable = new CoolHashTable<>(1000);
+        hashTable.add("CianFarrell","Testing123");
+        for (int i = 0; i < 1000; ++i) {
             String key = Utilities.getAlphaNumericString(3);
             String add = "String "+i;
             hashTable.add(key,add);
         }
-        hashTable.add("CianFarrell","Testing123");
-        System.out.println(hashTable.toString());
-//        for(int i=0;i<100;++i)
-//            System.out.println("Index "+i+" "+hashTable.size(i));
-//        hashTable.add("Hello","Testing2");
-//        hashTable.add("Conor","Testing3");
+        hashTable.add("Hello","Testing2");
+        hashTable.add("Conor","Testing3");
     }
 
     @Test
     void get() {
-       // System.out.println(hashTable.toString());
-//        for(int i = 0;i<10000;++i) System.out.println(i+" "+hashTable.size(i));
         assertEquals("Testing123",hashTable.get("CianFarrell"));
-
-//        assertEquals("Testing2",hashTable.get("Hello"));
-//        assertEquals("Testing3",hashTable.get("Conor"));
+        assertEquals("Testing2",hashTable.get("Hello"));
+        assertEquals("Testing3",hashTable.get("Conor"));
 
     }
 //
