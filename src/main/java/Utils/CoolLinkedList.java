@@ -182,6 +182,11 @@ public class CoolLinkedList<F> implements Iterable<F> {
         return false;
     }
 
+    public String toString(){
+        StringBuilder list = new StringBuilder();
+        for(F item: this) list.append("\n").append(item.toString());
+        return list.toString();
+    }
 
     public Iterator<F> iterator() {
         return new CoolIterator<F>(head);

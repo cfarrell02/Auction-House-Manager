@@ -17,8 +17,17 @@ class CoolLinkedListTest {
             String add = Utilities.getAlphaNumericString(6);
             list.add(add);
         }
+        list.add("Testing123");
     }
-
+    @Test
+    void search(){
+        for(String name: list){
+            System.out.println(name);
+            if(name.equals("Testing123")){
+                break;
+            }
+        }
+    }
     @org.junit.jupiter.api.Test
     void add() {
 
