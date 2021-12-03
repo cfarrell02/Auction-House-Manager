@@ -34,12 +34,15 @@ public class ModelController {
     @FXML
     private ChoiceBox<String> aucType;
     @FXML
+    private ComboBox<String> bidLotChoice;
+    @FXML
     private TextArea biddAddress, aucDesc;
     @FXML
     private AnchorPane aucAdd, bidAdd, biddAdd;
 
     private Bidder currentBidder;
     private AuctionLot currentLot;
+    private Bid currentBid;
 
     //General Methods
     public void initialize() {
@@ -54,7 +57,9 @@ public class ModelController {
                 mainList.getItems().add(auctionLot.toString());
         }
 
-
+        for(AuctionLot auctionLot:AuctionApplication.getAuctionAPI().getAuctionLots()){
+            bidLotChoice.getItems().add(auctionLot.getTitle());
+        }
 
 
 
@@ -77,6 +82,7 @@ public class ModelController {
     }
 
     public void viewAttributes(){
+        if(mainList.getSelectionModel().getSelectedIndex()>=0){
         if(biddAdd.isVisible()){
             currentBidder = AuctionApplication.getAuctionAPI().getBidder(mainList.getSelectionModel().getSelectedIndex());
             biddName.setText(currentBidder.getName());
@@ -91,6 +97,12 @@ public class ModelController {
             aucDesc.setText(currentLot.getDescription());
             aucYear.setText(String.valueOf(currentLot.getYear()));
             aucURL.setText(currentLot.getImageURL());
+        }}else if(bidAdd.isVisible()){
+            currentBid = currentBidder.getBid(mainList.getSelectionModel().getSelectedIndex());
+            bidDate.setValue(currentBid.getDate());
+            bidLotChoice.setValue(currentBid.getLot().getTitle());
+            bidAmount.setText(String.valueOf(currentBid.getAmount()));
+            bidTime.setText(String.valueOf(currentBid.getTime()));
         }
     }
     public void delete(KeyEvent keyEvent) {
@@ -102,7 +114,6 @@ public class ModelController {
                 AuctionApplication.getAuctionAPI().removeAuctionLot(index);
             else if (bidAdd.isVisible()) {
                 currentBidder.removeBid(index);
-                currentLot.removeBid(index);
             }
 
             mainList.getItems().remove(index);
@@ -134,6 +145,24 @@ public class ModelController {
        mainList.getItems().set(index,newBidder.toString());
     }
 
+    public void viewBids(MouseEvent mouseEvent){
+        if(biddAdd.isVisible()){
+        if(mouseEvent.getClickCount()>=2){
+            int index = mainList.getSelectionModel().getSelectedIndex();
+            if(index>=0){
+                currentBidder = AuctionApplication.getAuctionAPI().getBidder(index);
+                biddAdd.setVisible(false);
+                bidAdd.setVisible(true);
+                mainList.getItems().clear();
+                for(Bid bid:currentBidder.getBids())
+                    mainList.getItems().add(bid.toString());
+                modelTitle.setText(currentBidder.getName()+"'s Bids");
+                AuctionApplication.mainWindow.setTitle(currentBidder.getName()+"'s Bids");
+            }
+        }
+        }
+    }
+
     /**Auction Method**/
 
     public void addAuctionLot(){
@@ -158,23 +187,25 @@ public class ModelController {
 
     /**bid methods**/
     public void addBid(){
-        Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()));
+        String lotTitle = bidLotChoice.getValue();
+        AuctionLot lot = AuctionApplication.getAuctionAPI().findLotByName(lotTitle);
+
+        Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()),lot);
         mainList.getItems().add(newBid.toString());
         currentBidder.getBids().add(newBid);
-        currentLot.getBids().add(newBid);
-
+        bidDate.getEditor().clear();
         bidTime.clear();
         bidAmount.clear();
     }
 
     public void editBid(){
         int index = mainList.getSelectionModel().getSelectedIndex();
-        Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()));
-        currentBidder.editBid(index, newBid);
-        currentLot.getBids().add(newBid);
+        String lotTitle = bidLotChoice.getValue();
+        AuctionLot lot = AuctionApplication.getAuctionAPI().findLotByName(lotTitle);
 
-        mainList.getItems().set(index, newBid.toString());
-
+        Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()),lot);
+        mainList.getItems().set(index,newBid.toString());
+        currentBidder.getBids().set(index,newBid);
     }
 
 

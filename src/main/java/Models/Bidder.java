@@ -54,7 +54,9 @@ public class Bidder {
         this.email = email;
     }
 
-
+    public Bid getBid(int index){
+        return bids.get(index);
+    }
     public void editBid(int oldIndex,Bid bid){
         bids.set(oldIndex,bid);
     }

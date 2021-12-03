@@ -12,7 +12,7 @@
             <Button mnemonicParsing="false" prefHeight="8.0" prefWidth="64.0" text="Home" />
         </items>
       </ToolBar>
-      <ListView fx:id="mainList" onKeyPressed="#delete" onMousePressed="#viewAttributes" prefHeight="381.0" prefWidth="838.0" />
+      <ListView fx:id="mainList" onKeyPressed="#delete" onMouseClicked="#viewBids" onMousePressed="#viewAttributes" prefHeight="381.0" prefWidth="838.0" />
       <Text fx:id="modelTitle" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #d4d4d4;" text="Auction Lot" textAlignment="CENTER" wrappingWidth="401.5">
          <font>
             <Font size="24.0" />
@@ -20,7 +20,7 @@
       </Text>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <AnchorPane fx:id="biddAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="biddAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <TextField fx:id="biddName" layoutX="58.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Name" />
                   <TextArea fx:id="biddAddress" layoutX="319.0" layoutY="46.0" prefHeight="57.0" prefWidth="200.0" promptText="Address" />
@@ -45,11 +45,13 @@
             </AnchorPane>
             <AnchorPane fx:id="bidAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <TextField fx:id="bidAmount" layoutX="59.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Amount" />
-                  <TextField fx:id="bidTime" layoutX="576.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Time" />
-                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" text="Edit Selected" />
-                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" text="Add New" />
-                  <DatePicker fx:id="bidDate" layoutX="319.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Date" />
+                  <TextField fx:id="bidAmount" layoutX="61.0" layoutY="62.0" prefHeight="25.0" prefWidth="200.0" promptText="Amount" />
+                  <TextField fx:id="bidTime" layoutX="577.0" layoutY="62.0" prefHeight="25.0" prefWidth="200.0" promptText="Time" />
+                  <Button layoutX="525.0" layoutY="111.0" mnemonicParsing="false" onAction="#editBid" text="Edit Selected" />
+                  <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" onAction="#addBid" text="Add New" />
+                  <ComboBox fx:id="bidLotChoice" layoutX="319.0" layoutY="27.0" prefHeight="25.0" prefWidth="200.0" />
+                  <DatePicker fx:id="bidDate" layoutX="319.0" layoutY="62.0" prefHeight="25.0" prefWidth="200.0" promptText="Date" />
+                  <Label layoutX="401.0" layoutY="6.0" text="Bid on:" />
                </children>
             </AnchorPane>
          </children>
