@@ -3,64 +3,94 @@ package Utils;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class CoolHashTable<K,F> {
-    public Entry<K,F>[] table;
-    private int size,length;
+public class CoolHashTable<F> {
+    public Entry<F>[] table;
+    private int size;
 
     public CoolHashTable(int length) {
         this.size = 0;
-        this.length = length;
         table = new Entry[length];
-        for(int i = 0;i<length;++i) table[i]=new Entry("null","null");
+        for(int i = 0;i<length;++i) table[i]=new Entry(-1,"null");
     }
 
-    public int hashFunction(K key){
-        return Math.abs(key.hashCode() % length);
+    public int hashFunction(int key){
+        return Math.abs(key % table.length);
     }
 
-    public void add(K key,F object) {
-            int index = hashFunction(key);
-            Entry<K, F> item = new Entry<>(key, object);
-            Entry<K, F> head = table[index];
-            if(head.key!=null){
+    public void clear(){
+        this.size = 0;
+        for(int i = 0;i<table.length;++i) table[i]=new Entry(-1,"null");
+    }
+    public boolean contains(F item){
+        for(Entry<F> entry:table){
+            Entry<F>temp = entry;
+                while(temp!=null){
+                    if(temp.equals(item)) return true;
+                    temp = temp.next;
+                }}
+        return false;
+    }
+
+    public int add(F object) {
+            int index = hashFunction(size);
+            Entry<F> item = new Entry<>(size, object);
+            Entry<F> head = table[index];
+            if(head.key!=-1){
                 head.previous = item;
-                item.next = head;}
+                item.next = head;
+            }
                 table[index] = item;
-            ++size;
+            return size++;
+
         }
 
 
-//    public F get(K key){
-//        Entry<K,F> item = getEntry(key);
-//        return item==null ? null: item.value;
-//    }
+    public F get(int key){
+        Entry<F> item = getEntry(key);
+        return item==null ? null: item.value;
+    }
 
-    public F get(K key){
-        Entry<K,F> temp = table[hashFunction(key)];
+    private Entry<F> getEntry(int key){
+        Entry<F> temp = table[hashFunction(key)];
         while(temp!=null){
-            if(temp.key.equals(key)) return temp.value;
+            if(temp.key == key) return temp;
             temp=temp.next;
         }
         return null;
     }
 
-//public F remove(K key){
-//        Entry<K,F> item = getEntry(key);
-//        if(table[hashFunction(key)].equals(item)){
-//            table[hashFunction(key)] = item.next;
-//        }else{
-//            if(item.next!=null)
-//            item.previous.next=item.next;
-//            else item.previous.next=null;
-//        }
-//        return item.value;
-//}
+private F removeItem(int key){
+
+        Entry<F> item = getEntry(key);
+        if(item!=null){
+        if(table[hashFunction(key)].equals(item)){
+            table[hashFunction(key)] = item.next;
+        }else{
+            if(item.next!=null)
+            item.previous.next=item.next;
+            else item.previous.next=null;
+        }
+        return item.value;}
+        return null;
+}
+public F remove(int key){
+        F deletedItem = get(key);
+       CoolLinkedList<F> temp = new CoolLinkedList<>();
+       for(int i = 0;i<size;++i){
+          if(i!=key) temp.add(get(i));
+       }
+       clear();
+       for(F item:temp){
+           add(item);
+       }
+    return deletedItem;
+}
 
 
     public int size(){
         return size;}
     public int size(int key){
-        Entry<K,F> temp = table[key];
+        Entry<F> temp = table[key];
         for(int i=0;temp!=null;++i,temp=temp.next){
         if(temp.next == null) return i;
         }
@@ -75,9 +105,9 @@ public class CoolHashTable<K,F> {
 
     public String toString(){
     StringBuilder list = new StringBuilder("");
-    for(Entry<K,F> entry:table){
+    for(Entry<F> entry:table){
         if(entry.value!=null){list.append("\n"+entry.value);
-        Entry<K,F>temp = entry;
+        Entry<F>temp = entry;
         while(temp!=null){
             list.append("\n"+temp.value);
             temp = temp.next;
@@ -89,12 +119,12 @@ public class CoolHashTable<K,F> {
 
 
 
-class Entry<K,F> {
-    public K key;
+class Entry<F> {
+    public int key;
     public F value;
-    Entry<K,F> next = null,previous = null;
+    Entry<F> next = null,previous = null;
 
-    public Entry(K key, F value) {
+    public Entry(int key, F value) {
         this.key = key;
         this.value = value;
     }
@@ -104,13 +134,6 @@ class Entry<K,F> {
                 "\nNext = "+next+"\n";
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Entry<?, ?> entry = (Entry<?, ?>) o;
-        return Objects.equals(key, entry.key) && Objects.equals(value, entry.value) && Objects.equals(next, entry.next);
-    }
 
     @Override
     public int hashCode() {
