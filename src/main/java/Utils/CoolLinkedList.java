@@ -115,7 +115,7 @@ public class CoolLinkedList<F> implements Iterable<F> {
 
     }
 
-    private node<F> getNode(int index) {
+    public node<F> getNode(int index) {
         node<F> temp = head;
         for (int i = 0; i <= index && temp != null; ++i) {
             if (i == index)
@@ -130,6 +130,12 @@ public class CoolLinkedList<F> implements Iterable<F> {
         return null;
     }
 
+//    public void add(CoolLinkedList<F> list){
+//        node lastItem = getNode(size-1);
+//        node firstItem = list.getNode(0);
+//        lastItem.next=firstItem;
+//        firstItem.previous=lastItem;
+//    }
 
 
     public void add(int index, F element) {

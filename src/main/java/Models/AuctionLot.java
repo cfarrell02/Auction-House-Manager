@@ -9,6 +9,7 @@ public class AuctionLot {
     private String title,description,type,imageURL,timeSold;
     private int year,askingPrice,finalPrice;
     private LocalDate dateSold;
+    private boolean sold;
 
 
     public AuctionLot(String title, String description, String type, String imageURL, int year, int askingPrice) {
@@ -18,15 +19,16 @@ public class AuctionLot {
         this.imageURL = imageURL;
         this.year = year;
         this.askingPrice = askingPrice;
-
+        this.sold = false;
     }
-
     public void sell(int finalPrice,LocalDate dateSold,String timeSold){
+        sold = true;
         this.finalPrice = finalPrice;
         this.dateSold = dateSold;
         this.timeSold = timeSold;
     }
 
+    public boolean getSold(){return sold;}
     public String getTitle() {
         return title;
     }
@@ -103,16 +105,22 @@ public class AuctionLot {
 
     @Override
     public String toString() {
-        return "AuctionLot{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", type='" + type + '\'' +
-                ", imageURL='" + imageURL + '\'' +
-                ", timeSold='" + timeSold + '\'' +
-                ", year=" + year +
-                ", askingPrice=" + askingPrice +
-                ", finalPrice=" + finalPrice +
-                ", dateSold=" + dateSold +
-                '}';
+        return sold ?
+                "Title: " + title +
+                " Description: " + description +
+                " Type: " + type +
+                " ImageURL: " + imageURL +
+                " Time Sold: " + timeSold +
+                " Year: " + year +
+                " Asking Price: " + askingPrice +
+                " Final Price: " + finalPrice +
+                " Date Sold: " + dateSold :
+                "Title: " + title +
+                " Description: " + description +
+                " Type: " + type +
+                " ImageURL: " + imageURL +
+                " Year: " + year +
+                " Asking Price: " + askingPrice;
+
     }
 }
