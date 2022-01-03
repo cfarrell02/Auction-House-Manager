@@ -34,7 +34,7 @@
                </font>
             </Text>
             <Label prefHeight="17.0" prefWidth="150.0" style="-fx-text-fill: #d4d4d4;" text="Search auction lots/bidders" textAlignment="CENTER" />
-            <TextField fx:id="searchBar">
+            <TextField fx:id="searchBar" onAction="#search">
                <VBox.margin>
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </VBox.margin>

@@ -5,11 +5,12 @@
         <Utils.Entry>
           <key>0</key>
           <value class="Models.AuctionLot">
-            <title>Test</title>
-            <description>TestDescription</description>
-            <imageURL></imageURL>
-            <year>1990</year>
-            <askingPrice>24</askingPrice>
+            <title>test</title>
+            <description>6354</description>
+            <type>Books</type>
+            <imageURL>654654sdfsdf</imageURL>
+            <year>654</year>
+            <askingPrice>68897</askingPrice>
             <finalPrice>0</finalPrice>
             <sold>false</sold>
           </value>
@@ -4018,52 +4019,50 @@
         <Utils.Entry>
           <key>0</key>
           <value class="Models.Bidder">
-            <name>Cian</name>
-            <address>123</address>
-            <telephone>123</telephone>
-            <email>cian@mail.com</email>
+            <name>Conor </name>
+            <address>Farmley</address>
+            <telephone>0867368884</telephone>
+            <email>conor@gleeson.ie</email>
             <bids>
-              <head>
-                <contents class="Models.Bid">
-                  <time>12:00</time>
-                  <date>2022-01-24</date>
-                  <amount>20</amount>
-                  <lot reference="../../../../../../../../auctionLots/table/Utils.Entry/value"/>
-                </contents>
-              </head>
-              <tail reference="../head"/>
-              <size>1</size>
+              <size>0</size>
             </bids>
           </value>
         </Utils.Entry>
         <Utils.Entry>
           <key>1</key>
           <value class="Models.Bidder">
-            <name>Conor</name>
-            <address>12</address>
-            <telephone>12</telephone>
-            <email>1</email>
+            <name>Eric </name>
+            <address>Ballygunner</address>
+            <telephone>0864123997</telephone>
+            <email>eric@eric.ie</email>
             <bids>
-              <head>
-                <contents class="Models.Bid">
-                  <time>12</time>
-                  <date>2022-01-22</date>
-                  <amount>21</amount>
-                  <lot reference="../../../../../../../../auctionLots/table/Utils.Entry/value"/>
-                </contents>
-              </head>
-              <tail reference="../head"/>
-              <size>1</size>
+              <size>0</size>
             </bids>
           </value>
         </Utils.Entry>
         <Utils.Entry>
-          <key>-1</key>
-          <value class="string">null</value>
+          <key>2</key>
+          <value class="Models.Bidder">
+            <name>Cian</name>
+            <address>The Moorings </address>
+            <telephone>0868246014</telephone>
+            <email>cian@farrell.ie</email>
+            <bids>
+              <size>0</size>
+            </bids>
+          </value>
         </Utils.Entry>
         <Utils.Entry>
-          <key>-1</key>
-          <value class="string">null</value>
+          <key>3</key>
+          <value class="Models.Bidder">
+            <name>Adam </name>
+            <address>Somewhere</address>
+            <telephone>0863439380</telephone>
+            <email>adam@adam.ie</email>
+            <bids>
+              <size>0</size>
+            </bids>
+          </value>
         </Utils.Entry>
         <Utils.Entry>
           <key>-1</key>
@@ -8050,7 +8049,7 @@
           <value class="string">null</value>
         </Utils.Entry>
       </table>
-      <size>2</size>
+      <size>4</size>
     </bidders>
   </Main.AuctionAPI>
 </object-stream>

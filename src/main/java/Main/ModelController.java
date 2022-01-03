@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class ModelController {
     @FXML
@@ -32,7 +33,7 @@ public class ModelController {
 
     @FXML
     private TextField biddName, biddTelephone, biddEmail, aucTitle, aucYear,
-            aucAskingPrice, aucURL, bidAmount, bidTime, timeSold;
+            aucAskingPrice, aucURL, bidAmount, bidTime, timeSold, searchBar;
     @FXML
     private DatePicker bidDate, dateSold;
 
@@ -199,6 +200,8 @@ public class ModelController {
 
         }
     }
+
+
 
 
     /**
