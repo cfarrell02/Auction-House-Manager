@@ -54,9 +54,9 @@ public class Bid {
 
 
     public String toString(){
-        return "Time = "+time+
-                "Date = "+date+
-                "Amount = "+amount;
+        return "Time: "+time+
+                "Date: "+date+
+                "Amount: "+amount;
     }
 
 

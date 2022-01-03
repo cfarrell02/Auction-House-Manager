@@ -31,6 +31,7 @@ public class MainController {
         return currentTitle;
     }
 
+
     public void save() throws IOException {
         AuctionApplication.save();
     }

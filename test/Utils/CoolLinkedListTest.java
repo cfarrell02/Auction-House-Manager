@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CoolLinkedListTest {
     public CoolLinkedList<String> list = new CoolLinkedList<>();
-    public CoolHashTable<String, String> hashTable;
+
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -19,7 +19,7 @@ class CoolLinkedListTest {
         }
     }
 
-//    }
+//
 //    @Test
 //    void search(){
 //        for(String name: list){
