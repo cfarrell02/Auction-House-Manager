@@ -30,6 +30,8 @@ public class AuctionApplication extends Application {
         stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();
+//        for(int i=0;i<10000;++i)
+//            auctionAPI.addAuctionLot(new AuctionLot("title "+i,"bruh","bruh","",2000,12));
     }
 
     public static AuctionAPI getAuctionAPI() {

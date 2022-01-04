@@ -21,9 +21,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class ModelController {
     @FXML
@@ -42,7 +46,7 @@ public class ModelController {
     @FXML
     private TextArea biddAddress, aucDesc;
     @FXML
-    private AnchorPane aucAdd, bidAdd, biddAdd,completeAuc;
+    private AnchorPane aucAdd, bidAdd, biddAdd, completeAuc;
     @FXML
     private Button sellLot;
 
@@ -98,8 +102,6 @@ public class ModelController {
         }
 
 
-
-
     }
 
     public void back() {
@@ -115,16 +117,17 @@ public class ModelController {
             stage.setTitle("Main");
             stage.setScene(scene);
             stage.show();
-        } else if(bidAdd.isVisible()){
+        } else if (bidAdd.isVisible()) {
             mainList.getItems().clear();
             bidAdd.setVisible(false);
             biddAdd.setVisible(true);
             modelTitle.setText("Bidders");
             for (Bidder bidder : AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList())
                 mainList.getItems().add(bidder.toString());
-        }else{
+        } else {
             completeAuc.setVisible(false);
-            bidAdd.setVisible(true);
+            aucAdd.setVisible(true);
+            mainList.setDisable(false);
             modelTitle.setText("Auctions");
         }
     }
@@ -167,12 +170,12 @@ public class ModelController {
                             toBeSorted.add(bid);
                     }
                 }
-                toBeSorted.sort((a,b)->b.getAmount()-a.getAmount());
-                for(Bid bid: toBeSorted){
-                    bidList.getItems().add("Date: "+bid.getDate()+" Amount: "+bid.getAmount());
+                toBeSorted.sort((a, b) -> b.getAmount() - a.getAmount());
+                for (Bid bid : toBeSorted) {
+                    bidList.getItems().add("Date: " + bid.getDate() + " Amount: " + bid.getAmount());
                 }
                 sellLot.setDisable(true);
-                if(!currentLot.getSold())sellLot.setDisable(false);
+                if (!currentLot.getSold()) sellLot.setDisable(false);
 
             } else if (bidAdd.isVisible()) {
                 currentBid = currentBidder.getBid(mainList.getSelectionModel().getSelectedIndex());
@@ -202,14 +205,13 @@ public class ModelController {
     }
 
 
-
-
     /**
      * Bidder Methods
      **/
 
     public void addBidder() {
         try {
+            if(AuctionApplication.getAuctionAPI().getBidders().get(biddName.getText())==null){
             Bidder newBidder = new Bidder(biddName.getText(), biddAddress.getText(), biddTelephone.getText(), biddEmail.getText());
             mainList.getItems().add(newBidder.toString());
             AuctionApplication.getAuctionAPI().addBidder(newBidder);
@@ -217,7 +219,9 @@ public class ModelController {
             biddName.clear();
             biddAddress.clear();
             biddTelephone.clear();
-            biddEmail.clear();
+            biddEmail.clear();}else{
+                AlertBox.display("Error","A bidder with this name \""+biddName+"\" already exists");
+            }
         } catch (RuntimeException e) {
             AlertBox.display("Error!", "Enter in correct details \n" + e.getMessage());
         }
@@ -247,7 +251,7 @@ public class ModelController {
                         mainList.getItems().add(bid.toString());
                     bidLotChoice.getItems().clear();
                     for (AuctionLot auctionLot : AuctionApplication.getAuctionAPI().getAuctionLots().toCoolLinkedList()) {
-                        if(!auctionLot.getSold())bidLotChoice.getItems().add(auctionLot.getTitle());
+                        if (!auctionLot.getSold()) bidLotChoice.getItems().add(auctionLot.getTitle());
                     }
                     modelTitle.setText(currentBidder.getName() + "'s Bids");
                     AuctionApplication.mainWindow.setTitle(currentBidder.getName() + "'s Bids");
@@ -262,15 +266,21 @@ public class ModelController {
 
     public void addAuctionLot() {
         try {
-            AuctionLot newAuctionLot = new AuctionLot(aucTitle.getText(), aucDesc.getText(), aucType.getValue(), aucURL.getText(), Integer.parseInt(aucYear.getText()), Integer.parseInt(aucAskingPrice.getText()));
-            mainList.getItems().add(newAuctionLot.toString());
-            AuctionApplication.getAuctionAPI().addAuctionLot(newAuctionLot);
-
-            aucTitle.clear();
-            aucDesc.clear();
-            aucURL.clear();
-            aucYear.clear();
-            aucAskingPrice.clear();
+            if (aucType != null) {
+                AuctionLot newAuctionLot = new AuctionLot(aucTitle.getText(), aucDesc.getText(), aucType.getValue(), aucURL.getText(), Integer.parseInt(aucYear.getText()), Integer.parseInt(aucAskingPrice.getText()));
+                if(AuctionApplication.getAuctionAPI().getAuctionLots().get(aucTitle.getText())==null) {
+                    mainList.getItems().add(newAuctionLot.toString());
+                    AuctionApplication.getAuctionAPI().addAuctionLot(newAuctionLot);
+                    aucTitle.clear();
+                    aucDesc.clear();
+                    aucURL.clear();
+                    aucYear.clear();
+                    aucAskingPrice.clear();
+                }else{
+                    AlertBox.display("Error","A lot with this title \""+aucTitle.getText()+"\" already exists");
+                }
+            } else
+                AlertBox.display("Error!", "Please select type");
         } catch (RuntimeException e) {
             AlertBox.display("Error!", "Enter in correct details \n" + e.getMessage());
         }
@@ -287,16 +297,28 @@ public class ModelController {
             AlertBox.display("Error!", "Enter in correct details \n" + e.getMessage());
         }
     }
-    public void viewSell(){
-    aucAdd.setVisible(false);
-    completeAuc.setVisible(true);
-    finalBid.setText(highestBid(currentLot)+"");
-    modelTitle.setText("Finalising Sale on "+currentLot.getTitle());
-    currentLot = AuctionApplication.getAuctionAPI().getAuctionLot(mainList.getSelectionModel().getSelectedIndex());
-    mainList.setDisable(true);
+
+    public void viewSell() {
+        aucAdd.setVisible(false);
+        completeAuc.setVisible(true);
+        dateSold.setValue(LocalDate.now());
+        timeSold.setText(LocalTime.now().toString().substring(0,5));
+        int finalPrice;
+        if(highestBid(currentLot)!=null)
+            finalPrice = highestBid(currentLot).getAmount();
+        else
+            finalPrice = 0;
+        finalBid.setText(finalPrice + "");
+        modelTitle.setText("Finalising Sale on " + currentLot.getTitle());
+        currentLot = AuctionApplication.getAuctionAPI().getAuctionLot(mainList.getSelectionModel().getSelectedIndex());
+        mainList.setDisable(true);
     }
-    public void sellLot(){
-        currentLot.sell(Integer.parseInt(finalBid.getText()),dateSold.getValue(),timeSold.getText());
+
+    public void sellLot() {
+        AuctionLot lot = AuctionApplication.getAuctionAPI().getAuctionLots().get(currentLot.getTitle());
+        currentLot.sell(Integer.parseInt(finalBid.getText()), dateSold.getValue(), timeSold.getText());
+        lot.sell(Integer.parseInt(finalBid.getText()), dateSold.getValue(), timeSold.getText());
+        highestBid(currentLot).won();
         completeAuc.setVisible(false);
         aucAdd.setVisible(true);
         mainList.setDisable(false);
@@ -304,17 +326,20 @@ public class ModelController {
         for (AuctionLot auctionLot : AuctionApplication.getAuctionAPI().getAuctionLots().toCoolLinkedList())
             mainList.getItems().add(auctionLot.toString());
         sellLot.setDisable(true);
+        modelTitle.setText("Auction Lots");
     }
-    public int highestBid(AuctionLot lot){
-        int highestBid = 0;
+
+    public Bid highestBid(AuctionLot lot) {
+        Bid highestBid = new Bid(0);
         for (Bidder bidder : AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList()) {
             for (Bid bid : bidder.getBids()) {
-                if (bid.getLot().equals(lot) && bid.getAmount() > highestBid)
-                    highestBid = bid.getAmount();
+                if (bid.getLot().equals(lot) && bid.getAmount() > highestBid.getAmount())
+                    highestBid = bid;
             }
         }
-        return highestBid;
+        return highestBid.getLot() == null? null:highestBid;
     }
+
     /**
      * bid methods
      **/
@@ -322,22 +347,50 @@ public class ModelController {
         try {
             String lotTitle = bidLotChoice.getValue();
             AuctionLot lot = AuctionApplication.getAuctionAPI().findLotByName(lotTitle);
-            int highestBid = highestBid(lot);
+            int highestBid;
+            if(highestBid(lot)!=null)
+            highestBid = highestBid(lot).getAmount();
+            else
+                highestBid = 0;
 
+            if(Utilities.validTime(bidTime.getText())){
             if (Integer.parseInt(bidAmount.getText()) > highestBid) {
+                mainList.getItems().clear();
                 Bid newBid = new Bid(bidTime.getText(), bidDate.getValue(), Integer.parseInt(bidAmount.getText()), lot);
-                mainList.getItems().add(newBid.toString());
                 currentBidder.getBids().add(newBid);
+                currentBidder.getBids().sort(Comparator.comparing(Bid::getDate));
+                CoolLinkedList<Bid> sorted = new CoolLinkedList();
+                for(Bid bid1:currentBidder.getBids()){
+                    CoolLinkedList<Bid> timeSorted = new CoolLinkedList<>();
+                    for(Bid bid2:currentBidder.getBids()){
+                        if(bid1.getDate().equals(bid2.getDate())&&!sorted.contains(bid1)){
+                            timeSorted.add(bid2);
+                        }
+                    }
+                    timeSorted.sort(Comparator.comparing(Bid::getTime));        //This should be cleaned up, hopefully peter doesn't see this :(
+                    for(Bid bid:timeSorted)
+                        sorted.add(bid);
+                }
+                currentBidder.getBids().clear();
+                for(Bid bid: sorted)
+                    currentBidder.getBids().add(bid);
+                for(Bid bid : currentBidder.getBids()){
+                    mainList.getItems().add(bid.toString());
+                }
+
                 bidDate.getEditor().clear();
                 bidTime.clear();
                 bidAmount.clear();
             } else {
                 AlertBox.display("Error", "New bid must be greater than " + highestBid);
+            }}else{
+                AlertBox.display("Error",bidTime.getText()+" is not valid \n Time must be in 24 hour format as HH:MM");
             }
         } catch (RuntimeException e) {
             AlertBox.display("Error", "Enter in correct details \n" + e.getMessage());
         }
     }
+
 
     public void editBid() {
         try {
@@ -353,8 +406,12 @@ public class ModelController {
         }
     }
 
-    public void populateAmount(){
-        bidAmount.setText((highestBid(AuctionApplication.getAuctionAPI().findLotByName(bidLotChoice.getValue()))+1)+"");
+    public void populateAmount() {
+        AuctionLot auctionLot = AuctionApplication.getAuctionAPI().findLotByName(bidLotChoice.getValue());
+        bidDate.setValue(LocalDate.now());
+        bidTime.setText(LocalTime.now().toString().substring(0,5));
+        if(highestBid(auctionLot)!=null)
+        bidAmount.setText((highestBid(auctionLot).getAmount() + 1) + "");
     }
 
 

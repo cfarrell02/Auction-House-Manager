@@ -33,6 +33,7 @@ public class AuctionAPI {
         auctionLots.remove(index);
     }
     public void editAuctionLot(int oldIndex,AuctionLot auctionLot){
+        auctionLots.set(auctionLot.getTitle(),auctionLot);
         auctionLots.set(oldIndex,auctionLot);
     }
 
@@ -62,6 +63,8 @@ public class AuctionAPI {
         bidders.remove(index);
     }
     public void editBidder(int oldIndex,Bidder bidder){
+
+        bidders.set(bidder.getName(),bidder);
         bidders.set(oldIndex,bidder);
     }
 

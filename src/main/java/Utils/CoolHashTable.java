@@ -127,8 +127,13 @@ public class CoolHashTable<F> {
     }
 
     public void set(int key, F object) {
-        if (getEntry(key) != null)
-            getEntry(key).value = object;
+        if (getEntry(key) != null){
+            getEntry(key).value = object;}
+    }
+
+    public void set(String key, F object) {
+        if (getEntry(key) != null){
+            getEntry(key).value = object;}
     }
 
 

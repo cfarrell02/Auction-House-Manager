@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,6 +47,15 @@ public class MainController {
         stage.show();
     }
 
+    public void showQuickSearch() throws IOException {
+        Stage stage = AuctionApplication.mainWindow;
+        FXMLLoader fxmlLoader = new FXMLLoader(AuctionApplication.class.getResource("quick-search.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Quick Search");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static String getCurrentTitle() {
         return currentTitle;
     }
@@ -54,7 +64,8 @@ public class MainController {
         search();
     }
 
-    public void goTo(){
+    public void goTo(MouseEvent m){
+        if(m.getClickCount()>=2){
         int index = frontList.getSelectionModel().getSelectedIndex();
         AuctionLot auctionLot= AuctionApplication.getAuctionAPI().findLotByName(frontList.getItems().get(index));
         Bidder bidder = AuctionApplication.getAuctionAPI().findBidderByName(frontList.getItems().get(index));
@@ -62,7 +73,7 @@ public class MainController {
             AlertBox.display("Details of this Lot",auctionLot.toString());
         }else if(bidder!=null){
             AlertBox.display("Details of this Bidder",bidder.toString());
-        }
+        }}
 
     }
 
@@ -78,11 +89,9 @@ public class MainController {
             if(!AuctionApplication.getAuctionAPI().getBidders().isEmpty()) {
                 for (Bidder bidder : AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList())
                     if (bidder.getName().toLowerCase().contains(searchValue) || bidder.getTelephone().toLowerCase().contains(searchValue) ||
-                            bidder.getAddress().toLowerCase().contains(searchValue) || bidder.getEmail().toLowerCase().contains(searchValue)) {
-
+                            bidder.getAddress().toLowerCase().contains(searchValue) || bidder.getEmail().toLowerCase().contains(searchValue))
                         sortedBidder.add(bidder);
 
-                    }
                sortedBidder.sort(Comparator.comparing(Bidder::getName));
                     frontList.getItems().add("---Bidders---");
                 for (Bidder bidder1 : sortedBidder) {
@@ -95,11 +104,9 @@ public class MainController {
             if (!AuctionApplication.getAuctionAPI().getAuctionLots().isEmpty()) {
                 for (AuctionLot auctionLot : AuctionApplication.getAuctionAPI().getAuctionLots().toCoolLinkedList())
                     if (auctionLot.getTitle().toLowerCase().contains(searchValue) || auctionLot.getDescription().toLowerCase().contains(searchValue)
-                            || auctionLot.getType().toLowerCase().contains(searchValue) || (auctionLot.getYear()+"").contains(searchValue)) {
+                            || auctionLot.getType().toLowerCase().contains(searchValue) || (auctionLot.getYear()+"").contains(searchValue))
                         sortedAuctionLot.add(auctionLot);
-                       // System.out.println("Added: "+auctionLot);
 
-                    }
                     sortedAuctionLot.sort(Comparator.comparing(AuctionLot::getTitle));
                     frontList.getItems().add("---Auction Lots---");
                     for (AuctionLot auctionLot1 : sortedAuctionLot) {

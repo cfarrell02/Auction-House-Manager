@@ -7,16 +7,22 @@ public class Bid {
     private LocalDate date;
     private int amount;
     private AuctionLot lot;
+    private Boolean won;
 
     public Bid(String time, LocalDate date, int amount,AuctionLot auctionLot) {
         this.time = time;
         this.date = date;
         this.amount = amount;
         this.lot=auctionLot;
+        this.won = false;
     }
 
-    public Bid(String text, LocalDate value, int amount) {
+    public Bid(int amount) {
+        this.amount=amount;
+    }
 
+    public void won(){
+        won=true;
     }
 
     public AuctionLot getLot() {
@@ -54,9 +60,16 @@ public class Bid {
 
 
     public String toString(){
-        return "Time: "+time+
+        return won ? "(Won) "+"Time: "+time+
                 "Date: "+date+
-                "Amount: "+amount;
+                "Amount: "+amount+
+                "Lot: "+lot.getTitle()
+                :
+                "Time: "+time+
+                        "Date: "+date+
+                        "Amount: "+amount+
+                        "Lot: "+lot.getTitle()
+                ;
     }
 
 

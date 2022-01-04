@@ -2,6 +2,17 @@ package Utils;
 
 public class Utilities {
 
+    public static boolean validTime(String time){
+
+        if(time.length()==5) {
+            String half1=time.substring(0,2);
+            String half2=time.substring(3,5);
+            if (half1.matches("[0-9]+") && String.valueOf(time.charAt(2)).equals(":") && half2.matches("[0-9]+"))
+                return (Integer.parseInt(half1) >= 0 && Integer.parseInt(half1) < 24 && Integer.parseInt(half2) >= 0 && Integer.parseInt(half2) < 60);
+        }
+        return false;
+    }
+
     public static boolean validPPS(String text) {
         if((text.length()==9))
             return (text.substring(0,7).matches("[0-9]+"))&&(text.substring(7,9).matches("[a-zA-Z]+"));

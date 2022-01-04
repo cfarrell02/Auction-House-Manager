@@ -20,6 +20,7 @@
           <value class="Models.AuctionLot">
             <title>Antique Table</title>
             <description>Old wooden table </description>
+            <type>Books</type>
             <imageURL></imageURL>
             <year>1925</year>
             <askingPrice>250</askingPrice>
@@ -6664,7 +6665,15 @@
         </Utils.Entry>
         <Utils.Entry>
           <key>Antique Table</key>
-          <value class="Models.AuctionLot" reference="../../../intTable/Utils.Entry[2]/value"/>
+          <value class="Models.AuctionLot">
+            <title>Antique Table</title>
+            <description>Old wooden table </description>
+            <imageURL></imageURL>
+            <year>1925</year>
+            <askingPrice>250</askingPrice>
+            <finalPrice>0</finalPrice>
+            <sold>false</sold>
+          </value>
           <next>
             <key>-1</key>
             <value class="string">null</value>

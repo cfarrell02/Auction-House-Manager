@@ -22,7 +22,7 @@ public class AuctionLot {
         this.sold = false;
     }
     public void sell(int finalPrice,LocalDate dateSold,String timeSold){
-        sold = true;
+        this.sold = true;
         this.finalPrice = finalPrice;
         this.dateSold = dateSold;
         this.timeSold = timeSold;
@@ -110,11 +110,12 @@ public class AuctionLot {
                 " Description: " + description +
                 " Type: " + type +
                 " ImageURL: " + imageURL +
-                " Time Sold: " + timeSold +
                 " Year: " + year +
                 " Asking Price: " + askingPrice +
                 " Final Price: " + finalPrice +
-                " Date Sold: " + dateSold :
+                " Date Sold: " + dateSold +
+                " Time Sold: " + timeSold
+                :
                 "Title: " + title +
                 " Description: " + description +
                 " Type: " + type +
