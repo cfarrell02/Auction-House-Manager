@@ -22,7 +22,7 @@ public class MainController {
     private TextField searchBar;
 
     @FXML
-    private ListView frontList;
+    private ListView<String> frontList;
 
     private static String currentTitle;
 
@@ -54,6 +54,18 @@ public class MainController {
         search();
     }
 
+    public void goTo(){
+        int index = frontList.getSelectionModel().getSelectedIndex();
+        AuctionLot auctionLot= AuctionApplication.getAuctionAPI().findLotByName(frontList.getItems().get(index));
+        Bidder bidder = AuctionApplication.getAuctionAPI().findBidderByName(frontList.getItems().get(index));
+        if(auctionLot!=null){
+            AlertBox.display("Details of this Lot",auctionLot.toString());
+        }else if(bidder!=null){
+            AlertBox.display("Details of this Bidder",bidder.toString());
+        }
+
+    }
+
     public void search() {
     //    try {
 
@@ -71,26 +83,27 @@ public class MainController {
                         sortedBidder.add(bidder);
 
                     }
-               sortedBidder.shellSort(Comparator.comparing(Bidder::getName));
+               sortedBidder.sort(Comparator.comparing(Bidder::getName));
+                    frontList.getItems().add("---Bidders---");
                 for (Bidder bidder1 : sortedBidder) {
 
-                    frontList.getItems().add(bidder1.toString());
+                    frontList.getItems().add(bidder1.getName());
 
                 }
             }
 
             if (!AuctionApplication.getAuctionAPI().getAuctionLots().isEmpty()) {
-                for (AuctionLot auctionLot : AuctionApplication.getAuctionAPI().getAuctionLots().toCoolLinkedList()) {
+                for (AuctionLot auctionLot : AuctionApplication.getAuctionAPI().getAuctionLots().toCoolLinkedList())
                     if (auctionLot.getTitle().toLowerCase().contains(searchValue) || auctionLot.getDescription().toLowerCase().contains(searchValue)
                             || auctionLot.getType().toLowerCase().contains(searchValue) || (auctionLot.getYear()+"").contains(searchValue)) {
                         sortedAuctionLot.add(auctionLot);
-                        System.out.println("Added: "+auctionLot);
+                       // System.out.println("Added: "+auctionLot);
 
                     }
-                    sortedAuctionLot.shellSort(Comparator.comparing(AuctionLot::getTitle));
+                    sortedAuctionLot.sort(Comparator.comparing(AuctionLot::getTitle));
+                    frontList.getItems().add("---Auction Lots---");
                     for (AuctionLot auctionLot1 : sortedAuctionLot) {
-
-                        frontList.getItems().add(auctionLot1.toString());
+                        frontList.getItems().add(auctionLot1.getTitle());
                     }
                 }
             }
@@ -99,7 +112,7 @@ public class MainController {
      //       AlertBox.display("Error!", e.getMessage());
 
       //  }
-    }
+
 
 
     public void save() throws IOException {

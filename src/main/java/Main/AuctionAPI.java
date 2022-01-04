@@ -64,4 +64,11 @@ public class AuctionAPI {
     public void editBidder(int oldIndex,Bidder bidder){
         bidders.set(oldIndex,bidder);
     }
+
+    public Bidder findBidderByName(String bidderName){
+        for (int i = 0;i<bidders.size();++i){
+            if(bidders.get(i).getName().equals(bidderName))
+                return bidders.get(i);
+        }return null;
+    }
 }
