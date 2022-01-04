@@ -17,8 +17,7 @@ import java.util.Locale;
 
 
 public class MainController {
-    private CoolLinkedList<Bidder> sortedBidder = new CoolLinkedList<>();
-    private CoolLinkedList<AuctionLot> sortedAuctionLot = new CoolLinkedList<>();
+
     @FXML
     private TextField searchBar;
 
@@ -51,36 +50,44 @@ public class MainController {
         return currentTitle;
     }
 
+    public void initialize(){
+        search();
+    }
+
     public void search() {
-        try {
-            String searchValue = searchBar.getText().toLowerCase(Locale.ROOT).trim();
+    //    try {
+
+            CoolLinkedList<Bidder> sortedBidder = new CoolLinkedList<>();
+            CoolLinkedList<AuctionLot> sortedAuctionLot = new CoolLinkedList<>();
+            String searchValue = searchBar.getText().toLowerCase().trim();
             frontList.getItems().clear();
-//            CoolLinkedList sortedBidder = AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList();
-//            AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList().mergeSort(Comparator.comparing(Bidder::getName));
-//            sortedBidder.mergeSort(Comparator.comparing(Bidder::getName));
-//             System.out.println(sortedBidder);
 
 
-            for (Bidder bidder : AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList())
-                if (bidder.getName().toLowerCase(Locale.ROOT).trim().contains(searchValue) || bidder.getTelephone().toLowerCase(Locale.ROOT).trim().contains(searchValue) ||
-                        bidder.getAddress().toLowerCase(Locale.ROOT).trim().contains(searchValue) || bidder.getEmail().toLowerCase(Locale.ROOT).trim().contains(searchValue)) {
+            if(!AuctionApplication.getAuctionAPI().getBidders().isEmpty()) {
+                for (Bidder bidder : AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList())
+                    if (bidder.getName().toLowerCase().contains(searchValue) || bidder.getTelephone().toLowerCase().contains(searchValue) ||
+                            bidder.getAddress().toLowerCase().contains(searchValue) || bidder.getEmail().toLowerCase().contains(searchValue)) {
 
-                    sortedBidder.add(bidder);
-                    sortedBidder.mergeSort(Comparator.comparing(Bidder::getName));
+                        sortedBidder.add(bidder);
+
+                    }
+               sortedBidder.shellSort(Comparator.comparing(Bidder::getName));
+                for (Bidder bidder1 : sortedBidder) {
+
+                    frontList.getItems().add(bidder1.toString());
+
                 }
-            for (Bidder bidder1 : sortedBidder) {
-
-                frontList.getItems().add(bidder1.toString());
-
             }
 
-            if (AuctionApplication.getAuctionAPI().getAuctionLots().size() > 0) {
+            if (!AuctionApplication.getAuctionAPI().getAuctionLots().isEmpty()) {
                 for (AuctionLot auctionLot : AuctionApplication.getAuctionAPI().getAuctionLots().toCoolLinkedList()) {
-                    if (auctionLot.getTitle().toLowerCase(Locale.ROOT).trim().contains(searchValue) || auctionLot.getDescription().toLowerCase(Locale.ROOT).trim().contains(searchValue)
-                            || auctionLot.getType().toLowerCase(Locale.ROOT).trim().contains(searchValue)) {
+                    if (auctionLot.getTitle().toLowerCase().contains(searchValue) || auctionLot.getDescription().toLowerCase().contains(searchValue)
+                            || auctionLot.getType().toLowerCase().contains(searchValue) || (auctionLot.getYear()+"").contains(searchValue)) {
                         sortedAuctionLot.add(auctionLot);
-                        sortedAuctionLot.mergeSort(Comparator.comparing(AuctionLot::getTitle));
+                        System.out.println("Added: "+auctionLot);
+
                     }
+                    sortedAuctionLot.shellSort(Comparator.comparing(AuctionLot::getTitle));
                     for (AuctionLot auctionLot1 : sortedAuctionLot) {
 
                         frontList.getItems().add(auctionLot1.toString());
@@ -88,10 +95,10 @@ public class MainController {
                 }
             }
 
-        } catch (RuntimeException e) {
-            AlertBox.display("Error!", e.getMessage());
+    //    } catch (RuntimeException e) {
+     //       AlertBox.display("Error!", e.getMessage());
 
-        }
+      //  }
     }
 
 
@@ -101,6 +108,7 @@ public class MainController {
 
     public void load() throws IOException, ClassNotFoundException {
         AuctionApplication.load();
+        initialize();
     }
 
 

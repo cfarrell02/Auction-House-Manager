@@ -23,13 +23,13 @@ public class AuctionApplication extends Application {
     public static Stage mainWindow;
     @Override
     public void start(Stage stage) throws IOException {
+        auctionAPI = new AuctionAPI();
         mainWindow = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(AuctionApplication.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();
-        auctionAPI = new AuctionAPI();
     }
 
     public static AuctionAPI getAuctionAPI() {

@@ -24,7 +24,7 @@ public class AuctionAPI {
         this.auctionLots = auctionLots;
     }
     public void addAuctionLot(AuctionLot auctionLot){
-        auctionLots.add(auctionLot);
+        auctionLots.add(auctionLot.getTitle(),auctionLot);
     }
     public AuctionLot getAuctionLot(int index){
         return auctionLots.get(index);
@@ -56,7 +56,7 @@ public class AuctionAPI {
         return bidders.get(index);
     }
     public void addBidder(Bidder bidder){
-        bidders.add(bidder);
+        bidders.add(bidder.getName(),bidder);
     }
     public void removeBidder(int index){
         bidders.remove(index);
