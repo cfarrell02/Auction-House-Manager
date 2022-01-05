@@ -61,14 +61,14 @@ public class Bid {
 
     public String toString(){
         return won ? "(Won) "+"Time: "+time+
-                "Date: "+date+
-                "Amount: "+amount+
-                "Lot: "+lot.getTitle()
+                " Date: "+date+
+                " Amount: "+amount+
+                " Lot: "+lot.getTitle()
                 :
-                "Time: "+time+
-                        "Date: "+date+
-                        "Amount: "+amount+
-                        "Lot: "+lot.getTitle()
+                " Time: "+time+
+                        " Date: "+date+
+                        " Amount: "+amount+
+                        " Lot: "+lot.getTitle()
                 ;
     }
 

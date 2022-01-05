@@ -13,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +22,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -49,6 +54,8 @@ public class ModelController {
     private AnchorPane aucAdd, bidAdd, biddAdd, completeAuc;
     @FXML
     private Button sellLot;
+    @FXML
+    private ImageView aucImage;
 
     private Bidder currentBidder;
     private AuctionLot currentLot;
@@ -104,6 +111,8 @@ public class ModelController {
 
     }
 
+
+
     public void back() {
         if (biddAdd.isVisible() || aucAdd.isVisible()) {
             Stage stage = AuctionApplication.mainWindow;
@@ -146,7 +155,7 @@ public class ModelController {
         stage.show();
     }
 
-    public void viewAttributes() {
+    public void viewAttributes(){
         if (mainList.getSelectionModel().getSelectedIndex() >= 0) {
             if (biddAdd.isVisible()) {
                 currentBidder = AuctionApplication.getAuctionAPI().getBidder(mainList.getSelectionModel().getSelectedIndex());
@@ -163,6 +172,11 @@ public class ModelController {
                 aucDesc.setText(currentLot.getDescription());
                 aucYear.setText(String.valueOf(currentLot.getYear()));
                 aucURL.setText(currentLot.getImageURL());
+                try {
+                    aucImage.setImage(new Image(currentLot.getImageURL()));
+                }catch(IllegalArgumentException e){
+                    aucImage.setImage(new Image("https://i.imgur.com/xrmYIX1.png"));
+                }
                 CoolLinkedList<Bid> toBeSorted = new CoolLinkedList<>();
                 for (Bidder bidder : AuctionApplication.getAuctionAPI().getBidders().toCoolLinkedList()) {
                     for (Bid bid : bidder.getBids()) {
@@ -372,14 +386,13 @@ public class ModelController {
                         sorted.add(bid);
                 }
                 currentBidder.getBids().clear();
-                for(Bid bid: sorted)
-                    currentBidder.getBids().add(bid);
+                currentBidder.setBids(sorted);
                 for(Bid bid : currentBidder.getBids()){
                     mainList.getItems().add(bid.toString());
                 }
 
-                bidDate.getEditor().clear();
-                bidTime.clear();
+                bidDate.setValue(LocalDate.now());
+                bidTime.setText(LocalTime.now().toString().substring(0,5));
                 bidAmount.clear();
             } else {
                 AlertBox.display("Error", "New bid must be greater than " + highestBid);

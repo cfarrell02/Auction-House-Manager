@@ -109,7 +109,7 @@ public class AuctionLot {
                 "Title: " + title +
                 " Description: " + description +
                 " Type: " + type +
-                " ImageURL: " + imageURL +
+             //   " ImageURL: " + imageURL +
                 " Year: " + year +
                 " Asking Price: " + askingPrice +
                 " Final Price: " + finalPrice +
@@ -119,7 +119,7 @@ public class AuctionLot {
                 "Title: " + title +
                 " Description: " + description +
                 " Type: " + type +
-                " ImageURL: " + imageURL +
+             //   " ImageURL: " + imageURL +
                 " Year: " + year +
                 " Asking Price: " + askingPrice;
 

@@ -29,6 +29,7 @@ public class AuctionApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Main");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 //        for(int i=0;i<10000;++i)
 //            auctionAPI.addAuctionLot(new AuctionLot("title "+i,"bruh","bruh","",2000,12));

@@ -64,6 +64,12 @@ public class MainController {
         search();
     }
 
+    public void reset(){
+        AuctionApplication.getAuctionAPI().getBidders().clear();
+        AuctionApplication.getAuctionAPI().getAuctionLots().clear();
+        initialize();
+    }
+
     public void goTo(MouseEvent m){
         if(m.getClickCount()>=2){
         int index = frontList.getSelectionModel().getSelectedIndex();

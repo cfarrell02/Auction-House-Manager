@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -40,19 +41,20 @@
                   <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" onAction="#addBidder" text="Add New" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="aucAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="aucAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <TextField fx:id="aucTitle" layoutX="24.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="Title" />
                   <TextArea fx:id="aucDesc" layoutX="24.0" layoutY="46.0" prefHeight="57.0" prefWidth="200.0" promptText="Description" />
                   <TextField fx:id="aucYear" layoutX="243.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="Year of origin" />
                   <TextField fx:id="aucAskingPrice" layoutX="243.0" layoutY="75.0" prefHeight="25.0" prefWidth="200.0" promptText="Asking Price" />
-                  <TextField fx:id="aucURL" layoutX="449.0" layoutY="48.0" prefHeight="25.0" prefWidth="156.0" promptText="Image URL" />
+                  <TextField fx:id="aucURL" layoutX="450.0" layoutY="17.0" prefHeight="25.0" prefWidth="156.0" promptText="Image URL" />
                   <Button layoutX="399.0" layoutY="111.0" mnemonicParsing="false" onAction="#editAuctionLot" text="Edit Selected" />
                   <Button layoutX="243.0" layoutY="111.0" mnemonicParsing="false" onAction="#addAuctionLot" text="Add New" />
                   <ListView fx:id="bidList" layoutX="614.0" layoutY="17.0" prefHeight="88.0" prefWidth="200.0" />
                   <Label layoutX="701.0" text="Bids" />
                   <Button fx:id="sellLot" disable="true" layoutX="551.0" layoutY="111.0" mnemonicParsing="false" onAction="#viewSell" prefHeight="25.0" prefWidth="81.0" text="Sell" />
                   <ComboBox fx:id="aucType" layoutX="243.0" layoutY="17.0" prefHeight="25.0" prefWidth="200.0" promptText="Type" />
+                  <ImageView fx:id="aucImage" fitHeight="64.0" fitWidth="156.0" layoutX="449.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="bidAdd" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
