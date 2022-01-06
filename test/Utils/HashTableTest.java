@@ -29,12 +29,14 @@ class HashTableTest {
         assertEquals("Testing3",hashTable.get("Conor"));
 
     }
-//
-//    @Test
-//    void add() {
-//
-//    }
-//
+
+    @Test
+    void add() {
+
+
+
+    }
+
     @Test
     void delete() {
         assertEquals("Hello0", hashTable.get(0));

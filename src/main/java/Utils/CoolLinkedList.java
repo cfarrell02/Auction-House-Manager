@@ -40,30 +40,30 @@ public class CoolLinkedList<F> implements Iterable<F> {
     }
 
     public void sort(Comparator<F> c){
-        if(size>=1000)
+//        if(size>=1000)
             mergeSort(c);
-        else
-            shellSort(c);
+//        else
+//            shellSort(c);
     }
-    public void shellSort(Comparator<F> c){
-        CoolLinkedList<Integer> gaps = new CoolLinkedList();
-        gaps.add(1);
-        for(int i = 0 ; Math.pow(2,i)<size;++i){
-            gaps.add(0,(int) Math.pow(2,i) + 1);
-        }
-        for(Integer g : gaps) {
-
-            for(int e=g;e<size;e++){
-                F elem=get(e);
-                int i;
-
-                for(i=e;i>=g && c.compare(get(i-g),elem)>0;i-=g)
-                    set(i,get(i-g));
-
-                set(i,elem);
-            }
-        }
-    }
+//    public void shellSort(Comparator<F> c){
+//        CoolLinkedList<Integer> gaps = new CoolLinkedList();
+//        gaps.add(1);
+//        for(int i = 0 ; Math.pow(2,i)<size;++i){
+//            gaps.add(0,(int) Math.pow(2,i) + 1); // finds an amount of gaps
+//        }
+//        for(Integer g : gaps) {
+//
+//            for(int e=g;e<size;e++){
+//                F elem=get(e);  //takes e the first gap
+//                int i;
+//
+//                for(i=e;i>=g && c.compare(get(i-g),elem)>0;i-=g)
+//                    set(i,get(i-g));
+//
+//                set(i,elem);
+//            }
+//        }
+//    }
 
 
     public void mergeSort(Comparator<F> c) {
@@ -72,10 +72,9 @@ public class CoolLinkedList<F> implements Iterable<F> {
             int x = size / 2, y = size - x;
             CoolLinkedList<F> xa = new CoolLinkedList<>();
             CoolLinkedList<F> ya = new CoolLinkedList<>();
-            //Copy elements into sub lists
             int i;
             for (i = 0; i < x; i++) xa.add(get(i));
-            for (int i2 = 0; i2 < y; i2++, i++) ya.add(get(i));
+            for (int i2 = 0; i2 < y; i2++, i++) ya.add(get(i)); //copies elements into sub lists
             //Recursively merge sort the sub lists independently
             xa.mergeSort(c);
             ya.mergeSort(c);
@@ -83,8 +82,8 @@ public class CoolLinkedList<F> implements Iterable<F> {
             i = 0;
             int xai = 0, yai = 0;
             while (xai < xa.size() && yai < ya.size())
-                set(i++,(c.compare(xa.get(xai),ya.get(yai)))<0 ? xa.get(xai++) : ya.get(yai++));
-            while (xai < xa.size()) set(i++,xa.get(xai++));
+                set(i++,(c.compare(xa.get(xai),ya.get(yai)))<0 ? xa.get(xai++) : ya.get(yai++)); //check sub list to see which one comes first then set the element to be the first one repeats till list becomes 0
+            while (xai < xa.size()) set(i++,xa.get(xai++)); //then add rest of sublist back to main list, whichever is not zero
             while (yai < ya.size()) set(i++,ya.get(yai++));
         }
     }

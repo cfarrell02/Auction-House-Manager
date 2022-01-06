@@ -53,7 +53,7 @@ public class ModelController {
     @FXML
     private AnchorPane aucAdd, bidAdd, biddAdd, completeAuc;
     @FXML
-    private Button sellLot;
+    private Button sellLot, editLot;
     @FXML
     private ImageView aucImage;
 
@@ -189,7 +189,11 @@ public class ModelController {
                     bidList.getItems().add("Date: " + bid.getDate() + " Amount: " + bid.getAmount());
                 }
                 sellLot.setDisable(true);
-                if (!currentLot.getSold()) sellLot.setDisable(false);
+                editLot.setDisable(true);
+                if (!currentLot.getSold()) {
+                    sellLot.setDisable(false);
+                    editLot.setDisable(false);
+                }
 
             } else if (bidAdd.isVisible()) {
                 currentBid = currentBidder.getBid(mainList.getSelectionModel().getSelectedIndex());
@@ -244,7 +248,7 @@ public class ModelController {
     public void editBidder() {
         try {
             int index = mainList.getSelectionModel().getSelectedIndex();
-            Bidder newBidder = new Bidder(biddName.getText(), biddAddress.getText(), biddTelephone.getText(), biddEmail.getText());
+            Bidder newBidder = new Bidder(currentBidder.getName(), biddAddress.getText(), biddTelephone.getText(), biddEmail.getText());
             AuctionApplication.getAuctionAPI().editBidder(index, newBidder);
             mainList.getItems().set(index, newBidder.toString());
         } catch (RuntimeException e) {
@@ -303,7 +307,7 @@ public class ModelController {
     public void editAuctionLot() {
         try {
             int index = mainList.getSelectionModel().getSelectedIndex();
-            AuctionLot newAuctionLot = new AuctionLot(aucTitle.getText(), aucDesc.getText(), aucType.getValue(), aucURL.getText(), Integer.parseInt(aucYear.getText()), Integer.parseInt(aucAskingPrice.getText()));
+            AuctionLot newAuctionLot = new AuctionLot(currentLot.getTitle(), aucDesc.getText(), aucType.getValue(), aucURL.getText(), Integer.parseInt(aucYear.getText()), Integer.parseInt(aucAskingPrice.getText()));
             AuctionApplication.getAuctionAPI().editAuctionLot(index, newAuctionLot);
 
             mainList.getItems().set(index, newAuctionLot.toString());

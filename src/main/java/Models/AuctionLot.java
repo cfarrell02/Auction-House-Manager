@@ -106,7 +106,7 @@ public class AuctionLot {
     @Override
     public String toString() {
         return sold ?
-                "Title: " + title +
+                "(Sold) Title: " + title +
                 " Description: " + description +
                 " Type: " + type +
              //   " ImageURL: " + imageURL +
@@ -116,7 +116,7 @@ public class AuctionLot {
                 " Date Sold: " + dateSold +
                 " Time Sold: " + timeSold
                 :
-                "Title: " + title +
+                "(Available) Title: " + title +
                 " Description: " + description +
                 " Type: " + type +
              //   " ImageURL: " + imageURL +

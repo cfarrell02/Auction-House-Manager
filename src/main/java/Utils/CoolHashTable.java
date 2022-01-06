@@ -16,12 +16,12 @@ public class CoolHashTable<F> {
         for (int i = 0; i < length; ++i) keyTable[i] = new Entry("", "null");
     }
 
-    public int hashFunction(int key) {
-        return Math.abs(key % intTable.length);
+    public int hashFunction(int key) { // int table hashFunction
+        return Math.abs(key % intTable.length); // always between 0 and length
     }
     public int hashFunction(String key) {
         return Math.abs(key.hashCode() % keyTable.length);
-    }
+    } //key table hashFunction gets modulus of hashCode i.e random number
 
     public void clear() {
         this.size = 0;
@@ -43,16 +43,17 @@ public class CoolHashTable<F> {
     }
 
     public boolean add(String key,F object) {
-        if(get(key)==null){
+        if(get(key)==null){ // makes sure that it's unique
         int index1 = hashFunction(size);
         int index2 = hashFunction(key);
-        Entry<F> item1 = new Entry<>(String.valueOf(size), object);
+        Entry<F> item1 = new Entry<>(String.valueOf(size), object); // puts number in as key and object as the value
         Entry<F> intHead = intTable[index1];
         if (!intHead.key.equals("-1")) {
             intHead.previous = item1;
-            item1.next = intHead;
+            item1.next = intHead; //shuffles everything on by one in that chain
         }
         intTable[index1] = item1;
+
         Entry<F> keyHead = keyTable[index2];
         Entry<F> item2 = new Entry<>(key, object);
         //keyTable[index2] = item;
@@ -115,14 +116,14 @@ public class CoolHashTable<F> {
 
     public F remove(int key) {
         F deletedItem = get(key);
-        CoolLinkedList<Entry<F>> temp = new CoolLinkedList<>();
+        CoolLinkedList<Entry<F>> temp = new CoolLinkedList<>(); //makes local linked list
         for (int i = 0; i < size; ++i) {
-            if (i != key) temp.add(getEntry(i));
+            if (i != key) temp.add(getEntry(i)); //puts everything except deleted item
         }
         clear();
         for (Entry<F> item : temp) {
             add(item.key,item.value);
-        }
+        } //then adds everything back in
         return deletedItem;
     }
 
@@ -139,14 +140,6 @@ public class CoolHashTable<F> {
 
     public int size() {
         return size;
-    }
-
-    public int size(int key) {
-        Entry<F> temp = intTable[key];
-        for (int i = 0; temp != null; ++i, temp = temp.next) {
-            if (temp.next == null) return i;
-        }
-        return -1;
     }
 
 

@@ -7,6 +7,7 @@ import Utils.CoolLinkedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +25,8 @@ public class MainController {
 
     @FXML
     private ListView<String> frontList;
+    @FXML
+    private ChoiceBox<String> aucSort, bidderSort;
 
     private static String currentTitle;
 
@@ -61,13 +64,19 @@ public class MainController {
     }
 
     public void initialize(){
+        aucSort.getItems().addAll("Title","Description","Year","Type");
+        aucSort.setValue("Title");
+        aucSort.valueProperty().addListener((ov, oldValue, newValue) -> search());
+        bidderSort.getItems().addAll("Name","Address","Phone","Email");
+        bidderSort.setValue("Name");
+        bidderSort.valueProperty().addListener((ov, oldValue, newValue) -> search());
         search();
     }
 
     public void reset(){
         AuctionApplication.getAuctionAPI().getBidders().clear();
         AuctionApplication.getAuctionAPI().getAuctionLots().clear();
-        initialize();
+        search();
     }
 
     public void goTo(MouseEvent m){
@@ -81,6 +90,24 @@ public class MainController {
             AlertBox.display("Details of this Bidder",bidder.toString());
         }}
 
+    }
+
+    private void sortAuctionLots(String comparer,CoolLinkedList<AuctionLot> list){
+        switch (comparer) {
+            case "Title" -> list.sort(Comparator.comparing(AuctionLot::getTitle));
+            case "Description" -> list.sort(Comparator.comparing(AuctionLot::getDescription));
+            case "Year" -> list.sort(Comparator.comparing(AuctionLot::getYear));
+            default -> list.sort(Comparator.comparing(AuctionLot::getType));
+        }
+    }
+
+    private void sortBidders(String comparer,CoolLinkedList<Bidder> list){
+        switch (comparer) {
+            case "Name" -> list.sort(Comparator.comparing(Bidder::getName));
+            case "Address" -> list.sort(Comparator.comparing(Bidder::getAddress));
+            case "Phone" -> list.sort(Comparator.comparing(Bidder::getTelephone));
+            default -> list.sort(Comparator.comparing(Bidder::getEmail));
+        }
     }
 
     public void search() {
@@ -98,13 +125,11 @@ public class MainController {
                             bidder.getAddress().toLowerCase().contains(searchValue) || bidder.getEmail().toLowerCase().contains(searchValue))
                         sortedBidder.add(bidder);
 
-               sortedBidder.sort(Comparator.comparing(Bidder::getName));
+               sortBidders(bidderSort.getValue(),sortedBidder);
                     frontList.getItems().add("---Bidders---");
-                for (Bidder bidder1 : sortedBidder) {
-
+                for (Bidder bidder1 : sortedBidder)
                     frontList.getItems().add(bidder1.getName());
 
-                }
             }
 
             if (!AuctionApplication.getAuctionAPI().getAuctionLots().isEmpty()) {
@@ -112,12 +137,11 @@ public class MainController {
                     if (auctionLot.getTitle().toLowerCase().contains(searchValue) || auctionLot.getDescription().toLowerCase().contains(searchValue)
                             || auctionLot.getType().toLowerCase().contains(searchValue) || (auctionLot.getYear()+"").contains(searchValue))
                         sortedAuctionLot.add(auctionLot);
-
-                    sortedAuctionLot.sort(Comparator.comparing(AuctionLot::getTitle));
+                    sortAuctionLots(aucSort.getValue(),sortedAuctionLot);
                     frontList.getItems().add("---Auction Lots---");
-                    for (AuctionLot auctionLot1 : sortedAuctionLot) {
+                    for (AuctionLot auctionLot1 : sortedAuctionLot)
                         frontList.getItems().add(auctionLot1.getTitle());
-                    }
+
                 }
             }
 
@@ -134,7 +158,7 @@ public class MainController {
 
     public void load() throws IOException, ClassNotFoundException {
         AuctionApplication.load();
-        initialize();
+        search();
     }
 
 
